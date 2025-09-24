@@ -1,0 +1,170 @@
+{ 
+  "translation": {
+    "login": {
+      "title": "INICIAR SESIÓN",
+      "labels": {
+        "email": "Email",
+        "password": "Contraseña",
+        "sign_in": "Iniciar Sesions",
+        "forgot_password": "¿Has olvidado la contraseña?",
+        "sign_up": "Crear nueva cuenta"
+      },
+      "errors":{
+        "email": {
+            "blank": "Email no puede estar vacío"
+        },
+        "password": {
+            "blank": "Contraseña no puede estar vacío"
+        } 
+      }
+    },
+    "sign_up": {
+      "title": "CREAR NUEVA CUENTA",
+      "labels": {
+        "email": "Email",
+        "password": "Contraseña",
+        "password_confirmation": "Repite Contraseña",
+        "sign_up": "Crear nueva cuenta",
+        "forgot_password": "¿Has olvidado la contraseña?",
+        "login": "Iniciar Sesion"
+      },
+      "errors":{
+        "email": {
+            "blank": "Email no puede estar vacío"
+        },
+        "password": {
+            "blank": "Contraseña no puede estar vacío",
+            "format": "La Contraseña al menos debe tener 8 caracteres" 
+        },
+        "password_confirmation": {
+          "blank": "Repite Contraseña no puede estar vacío",
+          "different": "Las contraseñas no coinciden"
+         
+      }  
+      }
+    },
+    "forgot_password": {
+      "title": "RECUPERAR CONTRASEÑA",
+      "labels": {
+        "email": "Email",
+        "submit": "Recuperar Contraseña",
+        "back": "Volver a Login"
+      },
+      "requested": "Se ha enviado un email con las intrucciones para recuperar contraseña a tu correo",
+      "errors":{
+        "email": {
+            "blank": "Email no puede estar vacío"
+        }
+      }
+    },
+    "my_account": {
+      "title": "Mi Cuenta",
+      "change_email":{
+        "title": "Cambiar Email",
+        "labels": {
+          "email": "Email",
+          "submit": "Cambiar Email"
+        },
+        "requested": "Se ha cambiado el email con exito",
+        "errors":{
+          "email": {
+              "blank": "Email no puede estar vacío"
+          }
+        }
+      },
+      "change_password":{
+        "title": "Cambiar Contraseña",
+        "labels": {
+          "old_password": "Contraseña actual",
+          "password": "Nueva Contraseña",
+          "password_confirmation": "Repita Contraseña",
+          "submit": "Cambiar Contraseña"
+        },
+        "success": "Se ha cambiado la contraseña con exito",
+        "errors":{
+          "old_password": {
+            "blank": "Contraseña actual no puede estar vacío"
+          },
+          "password": {
+            "blank": "Nuevo Contraseña no puede estar vacío",
+            "format": "El Contraseña al menos debe tener 8 caracteres" 
+          },
+          "password_confirmation": {
+            "blank": "Repite Contraseña no puede estar vacío",
+            "different": "Las Contraseñas no coinciden"
+          }
+        }
+      },
+      "cancel_account":{
+        "title": "Eliminar Cuenta",
+        "button": "Eliminar Cuenta",
+        "modal":{
+          "title": "Eliminar Cuenta",
+          "text": "Si decide eliminar la cuenta se hara de forma definitiva. Esto significa que todos su datos se eliminaran y no podran volver a ser recuperados",
+          "confirmation": "Si desea continuar escriba la palabra 'ELIMINAR' en el siguiente recuadro y pulse 'Eliminar Cuenta'",
+          "delete_key": "ELIMINAR",
+          "labels": {
+            "back": "Volver",
+            "submit": "Eliminar Cuenta",
+            "delete_key": "Escribe 'ELIMINAR'"
+          },
+          "errors":{
+            "delete_key":{
+              "blank": "El campo no puede estar vacio",
+              "format": "Debe escribir la palabra correcta"
+            }
+          }
+        }
+      }
+    },
+    "reset_password": {
+      "title": "CREAR NUEVA CONTRASEÑA",
+      "labels": {
+        "password": "Nueva Contraseña",
+        "password_confirmation": "Repite Nueva Contraseña",
+        "submit": "crear nueva Contraseña"
+      },
+      "errors":{
+        "password": {
+          "blank": "Contraseña no puede estar vacío",
+          "format": "El Contraseña al menos debe tener 8 caracteres" 
+        },
+        "password_confirmation": {
+          "blank": "Repite Contraseña no puede estar vacío",
+          "different": "Las Contraseñas no coinciden"
+        
+        }  
+      }
+    },
+    "errors_handling": {
+      "common": {
+        "unknown": "No se ha podido realizar la peticion, intentelo de nuevo",
+        "forbidden": "No se tiene permisos para realizar esta accion"
+      },
+      "login": {
+        "bad_request": "Email o Contraseña incorrectos"
+      },
+      "sign_up": {
+        "email_exist": "Ya existe una cuenta con ese email",
+        "bad_password": "La Contraseña no es correcta",
+        "bad_request": "Email o Contraseña incorrectos"
+      },
+      "forgot_password": {
+        "email_not_exist": "No existe ninguna cuenta con ese Email"
+      },
+      "reset_password": {
+        "not_valid_token": "El token no existe o a expirado",
+        "bad_request": "El Contraseña al menos debe tener 8 caracteres"
+      },
+      "user_update_email": {
+        "bad_request": "El email es incorrecto o ya existe"
+      },
+      "user_update_password": {
+        "bad_request": "El Contraseña al menos debe tener 8 caracteres"
+      }
+
+
+    }
+
+  }
+}

@@ -1,0 +1,22 @@
+{ 
+  "translation": {
+    "login": {
+      "title": "LOGIN",
+      "labels": {
+        "email": "Email",
+        "password": "Password",
+        "sign_in": "Sign in",
+        "forgot_password": "Forgot Password?",
+        "sign_up": "Create new account"
+      },
+      "errors":{
+        "email": {
+            "blank": "Email can't be blank"
+        },
+        "password": {
+            "blank": "Password can't be blank"
+        } 
+      }
+    }
+  }
+}
