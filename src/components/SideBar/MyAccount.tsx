@@ -16,7 +16,7 @@ const MyAccount = () => {
 
   useEffect(() => {
 
-    const checkIfClickedOutside = e => {
+    const checkIfClickedOutside = (e: MouseEvent) => {
       if (myAccountOpen && ref.current && !ref.current.contains(e.target)) {
         setMyAccountOpen(false)
       }

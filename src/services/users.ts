@@ -2,7 +2,6 @@ import auth from './auth';
 import http from './base';
 import backendRoutes from './routes';
 import { 
-  LoginCredentials, 
   SignUpCredentials, 
   ForgotPasswordData, 
   ResetPasswordData, 
@@ -12,15 +11,20 @@ import {
   User
 } from '../types';
 
-  
-const login = (user: LoginCredentials): Promise<AuthResponse> => 
-  auth.post(backendRoutes.loginUrl, loginPayload(user))
+
+export interface loginProps {
+  email: string;
+  password: string;
+}
+
+const login = ({email, password}: loginProps): Promise<AuthResponse> => 
+  auth.post(backendRoutes.loginUrl, loginPayload({email, password}))
  
-const loginPayload = (user: LoginCredentials) => {
+const loginPayload = ({email, password}: loginProps) => {
   return {
     "grant_type": "password",
-    "email": user.email,
-    "password": user.password,
+    "email": email,
+    "password": password,
     "client_id": backendRoutes.clientId,
     "client_secret": backendRoutes.secretId
   }

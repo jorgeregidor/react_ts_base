@@ -8,11 +8,6 @@ export interface User {
 }
 
 // Auth types
-export interface LoginCredentials {
-  email: string;
-  password: string;
-}
-
 export interface SignUpCredentials {
   email: string;
   password: string;

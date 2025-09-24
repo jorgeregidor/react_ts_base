@@ -4,11 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth'
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
+import useLogin from "../../hooks/auth/useLogin";
 
 const Login = () => {
   const  { isLogged } = useAuth()
   const [logged, setLogged] = useState(isLogged())
-  const { login } = useAuth()
+  const { data,error, loading, login } = useLogin()
   const { t } = useTranslation();
 
   const {
@@ -18,27 +19,27 @@ const Login = () => {
   } = useForm();
 
 
-  const [serverError, setServerError] = useState(undefined);
+  const [serverError, setServerError] = useState<string | undefined>(undefined);
   //const { onUserChange } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log('isLogged', logged)
     if (logged) navigate('/dashboard')
 }, [logged, navigate])
 
+  useEffect(() => {
+    if (loading) return;
+    if (error) {
+      console.log(error)
+      setServerError(t(error))
+    }
+    if (data) setLogged(true)
+  }, [loading, error])
   
 
-  const onSubmit = async (user) => {
-      setServerError();
-      const result  = await login(user)
-      console.log(result)
-      if (result?.error) {
-        setServerError(t(result.error));
-      } else {
-        setLogged(true)
-      }
-
+  const onSubmit = async (data: any) => {
+      setServerError(undefined);
+      await login(data);
   };
 
   return (
@@ -50,12 +51,12 @@ const Login = () => {
             <div className='h-[50px] pt-4 text-sm text-red-600'>
               {errors.email && (
                 <p>
-                  {errors.email?.message}{" "}
+                  {String(errors.email?.message)}{" "}
                 </p>
               )}
               {errors.password && (
                 <p>
-                  {errors.password?.message}{" "}
+                  {String(errors.password?.message)}{" "}
                 </p>
               )}
               {serverError && (

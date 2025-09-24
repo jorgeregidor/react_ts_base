@@ -1,8 +1,8 @@
+import { AxiosError } from "axios";
 
+const ErrorsHandling =  (page: string, error: AxiosError) => {
 
-const ErrorsHandling =  (page, error) => {
-
-   const login = (error) => {
+   const login = (error: AxiosError) => {
     switch (error?.response?.status) {
         case 400:
           return "errors_handling.login.bad_request";
@@ -12,7 +12,7 @@ const ErrorsHandling =  (page, error) => {
       }
     }
 
-    const forgot_password = (error) => {
+    const forgot_password = (error: AxiosError) => {
       switch (error?.response?.status) {
           case 404:
             return "errors_handling.forgot_password.email_not_exist";
@@ -21,7 +21,7 @@ const ErrorsHandling =  (page, error) => {
       }
     }
     
-    const reset_password = (error) => {
+    const reset_password = (error: AxiosError) => {
       switch (error?.response?.status) {
           case 403:
           case 404:
@@ -33,15 +33,15 @@ const ErrorsHandling =  (page, error) => {
       }
     }
 
-    const sign_up = (error) => {
+    const sign_up = (error: AxiosError) => {
       switch (error?.response?.status) {
           case 400:
             return "errors_handling.sign_up.bad_request";
           case 422:
-              error = error?.request?.response || ''
-              if (error.includes('Email')){
+              const errorMessage = error?.request?.response || ''
+              if (errorMessage.includes('Email')){
                 return "errors_handling.sign_up.email_exist";
-              } else if (error.includes('Password')){
+              } else if (errorMessage.includes('Password')){
                 return "errors_handling.sign_up.email_exist";
               } else {
                 return "errors_handling.sign_up.bad_request"
@@ -52,7 +52,7 @@ const ErrorsHandling =  (page, error) => {
         }
       }
 
-      const user_update_email = (error) => {
+      const user_update_email = (error: AxiosError) => {
         switch (error?.response?.status) {
             case 422:
               return "errors_handling.user_update_email.bad_request";
@@ -64,7 +64,7 @@ const ErrorsHandling =  (page, error) => {
           }
         }
 
-        const user_update_password = (error) => {
+        const user_update_password = (error: AxiosError) => {
           switch (error?.response?.status) {
               case 422:
                 return "errors_handling.user_update_password.bad_request";
@@ -76,7 +76,7 @@ const ErrorsHandling =  (page, error) => {
             }
           }
 
-          const cancel_account = (error) => {
+          const cancel_account = (error: AxiosError) => {
             switch (error?.response?.status) {
                 case 403:
                     return "errors_handling.common.forbidden";

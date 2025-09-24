@@ -3,6 +3,7 @@ import UserContext from "../contexts/UserContext";
 import userService from "./../services/users";
 import ErrorsHandling from "../services/errors";
 import { ChangeEmailData, ChangePasswordData, HookResult } from "../types";
+import { AxiosError } from "axios";
 
 export default function useUser() {
   const context = useContext(UserContext);
@@ -18,8 +19,12 @@ export default function useUser() {
         const response = await userService.updateEmail(data);
         result.current = {response: response, error: false}
         setUserData(response)
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
         result.current = {response: null, error: ErrorsHandling('user_update_email',error)}
+      } else {
+        result.current = {response: null, error: "errors_handling.common.unknown"}
+      } 
     }
     
     return result.current
@@ -29,8 +34,12 @@ export default function useUser() {
     try {
         const response = await userService.updatePassword(data);
         result.current = {response: response, error: false}
-    } catch (error) {
+    } catch (error: unknown) {
+      if (error instanceof AxiosError) {
         result.current = {response: null, error: ErrorsHandling('user_update_password',error)}
+      } else {
+        result.current = {response: null, error: "errors_handling.common.unknown"}
+      } 
     }
     
     return result.current
