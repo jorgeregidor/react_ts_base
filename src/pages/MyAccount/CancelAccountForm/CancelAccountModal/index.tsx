@@ -4,10 +4,15 @@ import { useTranslation } from "react-i18next"
 import useAuth from "../../../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
 
-const CancelAccountModal = ({showModal, setShowModal}) => {
+interface CancelAccountModalProps {
+    showModal: boolean;
+    setShowModal: (showModal: boolean) => void;
+}
+
+const CancelAccountModal = ({showModal, setShowModal}: CancelAccountModalProps) => {
     const { t } = useTranslation()
-    const { navigate } = useNavigate()
-    const [serverError, setServerError] = useState(undefined)
+    const navigate = useNavigate()
+    const [serverError, setServerError] = useState<string | undefined>(undefined)
     const { cancelAccount } = useAuth()
 
     const {
@@ -25,7 +30,7 @@ const CancelAccountModal = ({showModal, setShowModal}) => {
 
     
     const onSubmit = async () => {
-        setServerError();
+        setServerError(undefined);
         const result  = await cancelAccount()
         if (result?.error) {
             setServerError(t(result.error));
@@ -88,7 +93,7 @@ const CancelAccountModal = ({showModal, setShowModal}) => {
                                     <div className='text-sm text-red-600 '>
                                         {errors.delete_key && (
                                         <p>
-                                            {errors.delete_key?.message}{" "}
+                                            {errors.delete_key?.message?.toString()}{" "}
                                         </p>
                                         )}
                                         {serverError && (
@@ -109,7 +114,7 @@ const CancelAccountModal = ({showModal, setShowModal}) => {
                                     <button
                                         className={`w-full bg-red-500 hover:bg-red-700 text-white font-bold py-4  ml-1 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"`}
                                         type="submit"
-                                        onClick={() => setServerError()}
+                                        onClick={() => setServerError(undefined)}
                                     >
                                         {t('my_account.cancel_account.modal.labels.submit')}
                                     </button>

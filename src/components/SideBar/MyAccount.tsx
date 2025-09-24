@@ -7,17 +7,17 @@ const MyAccount = () => {
 
   const [myAccountOpen, setMyAccountOpen] = useState(false)
   const {userData, logout} =  useAuth()
-  const active =   location.pathname.includes("/users")
+  const active = window.location.pathname.includes("/users")
 
   const nickname = userData?.email ? userData?.email.split('@')[0] : 'ERROR'
 
 
-  const ref = useRef()
+  const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
 
-    const checkIfClickedOutside = (e: MouseEvent) => {
-      if (myAccountOpen && ref.current && !ref.current.contains(e.target)) {
+    const checkIfClickedOutside = (e: Event) => {
+      if (myAccountOpen && ref.current && !ref.current.contains(e.target as Node)) {
         setMyAccountOpen(false)
       }
     }
@@ -41,7 +41,10 @@ const MyAccount = () => {
                     <div>Mi cuenta</div>   
                 </Link>
                 <hr className="w-3/4 mx-auto my-1 bg-gray-300"/>
-                <Link className="flex-auto flex justify-center items-center rounded hover:bg-gray-200">
+                <Link 
+                  className="flex-auto flex justify-center items-center rounded hover:bg-gray-200"
+                  to="#"
+                >
                     <div>Configuración</div> 
                 </Link>
                 <hr className="w-3/4 mx-auto my-1 bg-gray-300"/>

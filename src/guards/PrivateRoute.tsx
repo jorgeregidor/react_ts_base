@@ -8,13 +8,13 @@ const PrivateRoute = () => {
   const { isLogged, getUserData } = useAuth()
 
   useEffect(() => {
-    if (isLogged) {
+    if (isLogged()) {
       getUserData()
     }
   }, [getUserData, isLogged])
 
 
-  if (!isLogged) {
+  if (!isLogged()) {
     return <Navigate to="/login" replace={true} />;
   } else {
     return <Outlet/>;

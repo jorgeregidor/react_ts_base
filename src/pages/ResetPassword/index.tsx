@@ -18,14 +18,16 @@ const ResetPassword = () => {
 
   const [loading, setLoading] = useState(true);
   const [validToken, setValidToken] = useState(false);
-  const [serverError, setServerError] = useState(undefined);
+  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [searchParams] = useSearchParams()
   const navigate = useNavigate();
 
   const onLoad = useCallback(async () => {
     if (loading) {
-      setServerError();
-      const result  = await validPasswordToken({email: searchParams.get('email'), token: searchParams.get('token')})
+      setServerError(undefined);
+      const email = searchParams.get('email') || ''
+      const token = searchParams.get('token') || ''
+      const result  = await validPasswordToken({email, token})
       console.log(result)
       if (result?.error) {
         setServerError(result?.error);
@@ -38,8 +40,8 @@ const ResetPassword = () => {
 },[]);
   
 
-  const onSubmit = async (data) => {
-      setServerError();
+  const onSubmit = async (data: any) => {
+      setServerError(undefined);
       const result  = await resetPassword({...data, email: searchParams.get('email'), token: searchParams.get('token')})
       console.log(result)
       if (result?.error) {
@@ -65,12 +67,12 @@ const ResetPassword = () => {
             <div className='h-[50px] pt-4 text-sm text-red-600'>
               {errors.password && (
                 <p>
-                  {errors.password?.message}{" "}
+                  {errors.password?.message?.toString()}{" "}
                 </p>
               )}
               {errors.password_confirmation && (
                 <p>
-                  {errors.password_confirmation?.message}{" "}
+                  {errors.password_confirmation?.message?.toString()}{" "}
                 </p>
               )}
               {serverError && (
@@ -125,7 +127,7 @@ const ResetPassword = () => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="submit"
-            onClick={()=> {setServerError()}}
+            onClick={()=> {setServerError(undefined)}}
           >
              {t('reset_password.labels.submit')}
           </button>  

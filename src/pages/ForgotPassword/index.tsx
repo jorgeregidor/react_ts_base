@@ -18,8 +18,7 @@ const ForgotPassword = () => {
   } = useForm();
 
 
-  const [serverError, setServerError] = useState(undefined);
-  //const { onUserChange } = useContext(AuthContext);
+  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,8 +27,8 @@ const ForgotPassword = () => {
 
   
 
-  const onSubmit = async (user) => {
-      setServerError();
+  const onSubmit = async (user: any) => {
+      setServerError(undefined);
       const result  = await forgotPassword(user)
       console.log(result)
       if (result?.error) {
@@ -47,7 +46,7 @@ const ForgotPassword = () => {
             <div className='h-[50px] pt-4 text-sm text-red-600'>
               {errors.email && (
                 <p>
-                  {errors.email?.message}{" "}
+                  {errors.email?.message?.toString()}{" "}
                 </p>
               )}
               {serverError && (
@@ -81,7 +80,7 @@ const ForgotPassword = () => {
               <button
                 className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
                 type="submit"
-                onClick={()=> {setServerError()}}
+                onClick={()=> {setServerError(undefined)}}
               >
                 {t('forgot_password.labels.submit')}
               </button>

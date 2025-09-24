@@ -5,9 +5,9 @@ import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
 
 const ChangePasswordForm = () =>{
-    const [serverError, setServerError] = useState(undefined);
-    const [disabled, setDisabled] = useState(true);
-    const [success, setSuccess] = useState(undefined);
+    const [serverError, setServerError] = useState<string | undefined>(undefined);
+    const [disabled, setDisabled] = useState<boolean>(true);
+    const [success, setSuccess] = useState<string | undefined>(undefined);
     const {userData} = useAuth();
     const {updatePassword} = useUser();
 
@@ -22,9 +22,9 @@ const ChangePasswordForm = () =>{
     } = useForm();
 
 
-    const onSubmit = async (data) => {
-      setServerError();
-      data = {...data, id: userData.id}
+    const onSubmit = async (data: any) => {
+      setServerError(undefined);
+      data = {...data, id: userData?.id}
       const result  = await updatePassword(data)
       console.log(result)
       if (result?.error) {
@@ -100,17 +100,17 @@ const ChangePasswordForm = () =>{
             <div className='text-sm text-red-600 '>
                 {errors.old_password && (
                 <p>
-                    {errors.old_password?.message}{" "}
+                    {errors.old_password?.message?.toString()}{" "}
                 </p>
                 )}
                 {errors.password && (
                 <p>
-                    {errors.password?.message}{" "}
+                    {errors.password?.message?.toString()}{" "}
                 </p>
                 )}
                 {errors.password_confirmation && (
                 <p>
-                    {errors.password_confirmation?.message}{" "}
+                    {errors.password_confirmation?.message?.toString()}{" "}
                 </p>
                 )}
                 {serverError && (
@@ -130,7 +130,7 @@ const ChangePasswordForm = () =>{
           <button
               className={` ${ disabled ? 'bg-blue-200':'bg-blue-500 hover:bg-blue-700'} text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"`}
               type="submit"
-              onClick={()=> {setServerError()}}
+              onClick={()=> {setServerError(undefined)}}
             >
               {t('my_account.change_password.labels.submit')}
           </button>

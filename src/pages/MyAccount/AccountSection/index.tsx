@@ -1,6 +1,11 @@
+interface AccountSectionProps {
+    title: string;
+    icon: React.ReactNode;
+    iconColor?: string;
+    form: React.ReactNode;
+}
 
-
-const AccountSection = ({title, icon, iconColor = 'blue', form}) =>{
+const AccountSection = ({title, icon, iconColor = 'blue', form}: AccountSectionProps) =>{
     return (
         <>
           <div className="flex flex-wrap m-5 p-3 pt-6 ">

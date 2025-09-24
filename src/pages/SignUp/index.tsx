@@ -19,7 +19,7 @@ const SignUp = () => {
   } = useForm();
 
 
-  const [serverError, setServerError] = useState(undefined);
+  const [serverError, setServerError] = useState<string | undefined>(undefined);
   //const { onUserChange } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -30,8 +30,8 @@ const SignUp = () => {
 
   
 
-  const onSubmit = async (user) => {
-      setServerError();
+  const onSubmit = async (user: any) => {
+      setServerError(undefined);
       const result  = await signUp(user)
       console.log(result)
       if (result?.error) {
@@ -50,17 +50,17 @@ const SignUp = () => {
             <div className='h-[50px] pt-4 text-sm text-red-600'>
               {errors.email && (
                 <p>
-                  {errors.email?.message}{" "}
+                  {errors.email?.message?.toString()}{" "}
                 </p>
               )}
               {errors.password && (
                 <p>
-                  {errors.password?.message}{" "}
+                  {errors.password?.message?.toString()}{" "}
                 </p>
               )}
               {errors.password_confirmation && (
                 <p>
-                  {errors.password_confirmation?.message}{" "}
+                  {errors.password_confirmation?.message?.toString()}{" "}
                 </p>
               )}
               {serverError && (
@@ -138,7 +138,7 @@ const SignUp = () => {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
             type="submit"
-            onClick={()=> {setServerError()}}
+            onClick={()=> {setServerError(undefined)}}
           >
              {t('login.labels.sign_up')}
           </button>

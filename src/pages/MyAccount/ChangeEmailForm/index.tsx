@@ -5,9 +5,9 @@ import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
 
 const ChangeEmailForm = () =>{
-    const [serverError, setServerError] = useState(undefined);
-    const [disabled, setDisabled] = useState(true);
-    const [success, setSuccess] = useState(undefined);
+    const [serverError, setServerError] = useState<string | undefined>(undefined);
+    const [disabled, setDisabled] = useState<boolean>(true);
+    const [success, setSuccess] = useState<string | undefined>(undefined);
     const {userData} = useAuth();
     const {updateEmail} = useUser();
 
@@ -20,9 +20,9 @@ const ChangeEmailForm = () =>{
     } = useForm();
 
 
-    const onSubmit = async (data) => {
-      setServerError();
-      data = {...data, id: userData.id}
+    const onSubmit = async (data: any) => {
+      setServerError(undefined);
+      data = {...data, id: userData?.id}
       const result  = await updateEmail(data)
       console.log(result)
       if (result?.error) {
@@ -58,7 +58,7 @@ const ChangeEmailForm = () =>{
               <div className='text-sm text-red-600 '>
                   {errors.email && (
                   <p>
-                      {errors.email?.message}{" "}
+                      {errors.email?.message?.toString()}{" "}
                   </p>
                   )}
                   {serverError && (
@@ -78,7 +78,7 @@ const ChangeEmailForm = () =>{
             <button
                 className={` ${ disabled ? 'bg-blue-200':'bg-blue-500 hover:bg-blue-700'} text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"`}
                 type="submit"
-                onClick={()=> {setServerError()}}
+                onClick={()=> {setServerError(undefined)}}
               >
                 {t('my_account.change_email.labels.submit')}
             </button>
