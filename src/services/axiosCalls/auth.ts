@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
-import backendRoutes from './routes'
+import backendRoutes from '../routes'
 
 const auth: AxiosInstance = axios.create({
   baseURL: backendRoutes.baseUrl

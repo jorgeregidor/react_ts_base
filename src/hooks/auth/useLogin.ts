@@ -4,6 +4,7 @@ import useStorage from '../useStorage';
 import { User, AuthResponse } from '../../types';
 import ErrorsHandling from '../../services/errors';
 import { AxiosError } from 'axios';
+import { loginService } from '../../services/authServices/loginService';
 
 export interface useLoginProps {
   email: string;
@@ -24,7 +25,7 @@ export default function useLogin() {
     setError(null);
     
     try {
-      const authResponse: AuthResponse = await userService.login({email, password});
+      const authResponse: AuthResponse = await loginService({email, password});
       setTokens(authResponse.access_token, authResponse.refresh_token);
       
       const userResponse: User = await userService.me();

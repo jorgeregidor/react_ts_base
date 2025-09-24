@@ -1,5 +1,5 @@
-import auth from './auth';
-import http from './base';
+import auth from './axiosCalls/auth';
+import http from './axiosCalls/base';
 import backendRoutes from './routes';
 import { 
   SignUpCredentials, 
@@ -10,25 +10,6 @@ import {
   AuthResponse,
   User
 } from '../types';
-
-
-export interface loginProps {
-  email: string;
-  password: string;
-}
-
-const login = ({email, password}: loginProps): Promise<AuthResponse> => 
-  auth.post(backendRoutes.loginUrl, loginPayload({email, password}))
- 
-const loginPayload = ({email, password}: loginProps) => {
-  return {
-    "grant_type": "password",
-    "email": email,
-    "password": password,
-    "client_id": backendRoutes.clientId,
-    "client_secret": backendRoutes.secretId
-  }
-}
 
 const signUp = (user: SignUpCredentials): Promise<AuthResponse> => 
   auth.post(backendRoutes.signUpUrl, signUpPayload(user))
@@ -102,7 +83,6 @@ const cancelAccount = (): Promise<any> => http.delete(backendRoutes.deleteCurren
 const me = (): Promise<User> => http.get(backendRoutes.currentUserUrl)
 
 export default {
-  login,
   signUp,
   forgotPassword,
   validPasswordToken,

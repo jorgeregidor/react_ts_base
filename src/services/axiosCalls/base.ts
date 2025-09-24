@@ -1,5 +1,5 @@
 import axios from 'axios';
-import backendRoutes from './routes'
+import backendRoutes from '../routes'
 
 
 const http = axios.create({
