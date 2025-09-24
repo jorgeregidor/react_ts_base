@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import userService from '../../services/users';
 import useStorage from '../useStorage';
-import { User, AuthResponse } from '../../types';
+import { AuthResponse } from '../../types';
 import ErrorsHandling from '../../services/errors';
 import { AxiosError } from 'axios';
 import { loginService } from '../../services/authServices/loginService';
@@ -12,7 +11,7 @@ export interface useLoginProps {
 }
 
 export default function useLogin() {
-  const [data, setData] = useState<User | null>(null);
+  const [data, setData] = useState<AuthResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   
@@ -27,13 +26,9 @@ export default function useLogin() {
     try {
       const authResponse: AuthResponse = await loginService({email, password});
       setTokens(authResponse.access_token, authResponse.refresh_token);
-      
-      const userResponse: User = await userService.me();
-      setData(userResponse);
-      
+      setData(authResponse);
     } catch (err: unknown) {
       cleanTokens();
-      console.log(err)
       setError(ErrorsHandling('login', err as AxiosError));
       
     } finally {

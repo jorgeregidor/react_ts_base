@@ -20,7 +20,6 @@ const Login = () => {
 
 
   const [serverError, setServerError] = useState<string | undefined>(undefined);
-  //const { onUserChange } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +32,7 @@ const Login = () => {
       console.log(error)
       setServerError(t(error))
     }
-    if (data) setLogged(true)
+    if (data && !error) setLogged(true)
   }, [loading, error])
   
 

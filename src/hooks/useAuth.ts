@@ -23,22 +23,6 @@ export default function useAuth() {
   const navigate = useNavigate();
   const {setTokens, cleanTokens, isLogged} = useStorage();
 
-  // const login = useCallback(async (user: LoginCredentials): Promise<HookResult> => {
-  //   try {
-  //       const authResponse = await userService.login(user);
-  //       result.current = {response: authResponse, error: false}
-  //       setTokens(authResponse.access_token, authResponse.refresh_token)
-  //       const userResponse = await userService.me();
-  //       setUserData(userResponse)
-  //   } catch (error) {
-  //       console.log(error)
-  //       cleanTokens()
-  //       result.current = {response: null, error: ErrorsHandling('login',error)}
-  //   }
-    
-  //   return result.current
-  // }, [cleanTokens, setTokens, setUserData])
-
   const signUp = useCallback(async (user: SignUpCredentials): Promise<HookResult> => {
     try {
         const authResponse = await userService.signUp(user);
