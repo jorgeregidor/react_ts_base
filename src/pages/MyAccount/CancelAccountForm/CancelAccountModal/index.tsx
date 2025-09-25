@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form"
 import { useTranslation } from "react-i18next"
 import useAuth from "../../../../hooks/useAuth"
 import { useNavigate } from "react-router-dom"
+import Input from "../../../../components/forms/Input"
+import Button from "../../../../components/forms/Button"
 
 interface CancelAccountModalProps {
     showModal: boolean;
@@ -67,27 +69,22 @@ const CancelAccountModal = ({showModal, setShowModal}: CancelAccountModalProps) 
                             </div>
 
                             <form className="" onSubmit={handleSubmit(onSubmit)}>
-                                <div className="relative group pb-2 mx-4">
-                                    <input
-                                    className={`border rounded-lg w-full  pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.delete_key ? "border-gray-300" : "border-red-600"}`}
+                                <div className="pb-2 mx-4">
+                                    <Input
                                     id="delete_key"
                                     type="text"
-                                    {...register("delete_key", {
+                                    register={register}
+                                    label={t('my_account.cancel_account.modal.labels.delete_key')}
+                                    error={errors.delete_key}
+                                    validation={{
                                         required: t('my_account.cancel_account.modal.errors.delete_key.blank'),
-                                        validate: (value) => {
+                                        validate: (value: string) => {
                                             if (value != t('my_account.cancel_account.modal.delete_key')) {
                                               return t('my_account.cancel_account.modal.errors.delete_key.format');
                                             }
                                         }
-                                    })}
-                                    
+                                    }}
                                     />
-                                    <label
-                                    className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.delete_key ? "text-gray-300" : "text-red-600"}`}
-                                    htmlFor="delete_key"
-                                    >
-                                    {t('my_account.cancel_account.modal.labels.delete_key')}
-                                    </label>
                                 </div>
                                 <div className="my-2 mx-4">
                                     <div className='text-sm text-red-600 '>
@@ -104,20 +101,22 @@ const CancelAccountModal = ({showModal, setShowModal}: CancelAccountModalProps) 
                                     </div>
                                 </div>
                                 <div className="flex w-full justify-end p-4 pt-0">
-                                    <button
-                                        className={`w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-4  mr-1 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"`}
+                                    <Button
                                         type="button"
+                                        variant="primary"
                                         onClick={() => goBack()}
+                                        className="w-full mr-1"
                                     >
                                         {t('my_account.cancel_account.modal.labels.back')}
-                                    </button>
-                                    <button
-                                        className={`w-full bg-red-500 hover:bg-red-700 text-white font-bold py-4  ml-1 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-400"`}
+                                    </Button>
+                                    <Button
                                         type="submit"
+                                        variant="danger"
                                         onClick={() => setServerError(undefined)}
+                                        className="w-full ml-1"
                                     >
                                         {t('my_account.cancel_account.modal.labels.submit')}
-                                    </button>
+                                    </Button>
                                 </div>
                             </form>
                         </>

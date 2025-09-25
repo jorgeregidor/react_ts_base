@@ -72,9 +72,9 @@ const updatePassword = (data: ChangePasswordData): Promise<any> =>
  
 const updatePasswordPayload = (data: ChangePasswordData) => {
   return {
-    "old_password" : data.current_password,
-    "password" : data.new_password,
-    "password_confirmation" : data.new_password,
+    "old_password" : data.old_password,
+    "password" : data.password,
+    "password_confirmation" : data.password_confirmation,
   }
 }
 

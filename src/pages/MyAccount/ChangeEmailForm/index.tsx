@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
+import Input from "../../../components/forms/Input";
+import Button from "../../../components/forms/Button";
 
 const ChangeEmailForm = () =>{
     const [serverError, setServerError] = useState<string | undefined>(undefined);
@@ -16,43 +18,44 @@ const ChangeEmailForm = () =>{
     const {
         register,
         handleSubmit,
+        watch,
         formState: { errors },
     } = useForm();
+
+    // Watch specific form fields to enable/disable the submit button
+    const email = watch('email');
+    
+    useEffect(() => {
+        setDisabled(!email || email.trim() === '');
+    }, [email]);
 
 
     const onSubmit = async (data: any) => {
       setServerError(undefined);
       data = {...data, id: userData?.id}
       const result  = await updateEmail(data)
-      console.log(result)
       if (result?.error) {
         setServerError(t(result.error));
       } else {
-        setSuccess(t('my_account.update_email.success'))
+        setSuccess(t('my_account.change_email.requested'))
       }
     }
 
     return (
         <>
         <form className="" onSubmit={handleSubmit(onSubmit)}>
-            <div className="relative group pb-2">
-                <input
-                  className={`border rounded-lg w-full  pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
+            <div className="pb-2">
+                <Input
                   id="email"
                   type="email"
-                  {...register("email", {
+                  register={register}
+                  label={t('my_account.change_email.labels.email')}
+                  error={errors.email}
+                  validation={{
                     required: t('my_account.change_email.errors.email.blank'),
-                  })}
-                  onChange={()=>{setDisabled(false); }}
+                  }}
                   defaultValue={userData?.email}
-                  
                 />
-                <label
-                  className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-                  htmlFor="email"
-                >
-                  {t('my_account.change_email.labels.email')}
-                </label>
             </div>
             <div className="my-2">
               <div className='text-sm text-red-600 '>
@@ -75,13 +78,15 @@ const ChangeEmailForm = () =>{
                   )}
               </div>
             </div>
-            <button
-                className={` ${ disabled ? 'bg-blue-200':'bg-blue-500 hover:bg-blue-700'} text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"`}
+            <Button
                 type="submit"
-                onClick={()=> {setServerError(undefined)}}
+                variant="primary"
+                disabled={disabled}
+                onClick={() => setServerError(undefined)}
+                className={disabled ? 'bg-blue-200' : ''}
               >
                 {t('my_account.change_email.labels.submit')}
-            </button>
+            </Button>
         </form>
         </>
     )

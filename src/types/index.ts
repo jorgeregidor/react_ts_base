@@ -36,8 +36,9 @@ export interface ChangeEmailData {
 
 export interface ChangePasswordData {
   id: string;
-  current_password: string;
-  new_password: string;
+  old_password: string;
+  password: string;
+  password_confirmation: string;
 }
 
 // Context types

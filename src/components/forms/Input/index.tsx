@@ -7,8 +7,9 @@ interface InputProps {
   label: string;
   error?: any;
   placeholder?: string;
-  required?: boolean;
   validation?: any;
+  onChange?: () => void;
+  defaultValue?: string;
 }
 
 const Input: React.FC<InputProps> = ({
@@ -18,8 +19,9 @@ const Input: React.FC<InputProps> = ({
   label,
   error,
   placeholder,
-  required = false,
-  validation = {}
+  validation = {},
+  onChange,
+  defaultValue
 }) => {
   return (
     <div className="relative group">
@@ -30,9 +32,12 @@ const Input: React.FC<InputProps> = ({
         id={id}
         type={type}
         placeholder={placeholder}
+        defaultValue={defaultValue}
         {...register(id, {
-          required: required ? `${label} es requerido` : false,
-          ...validation
+          ...validation,
+          onChange: (_e: any) => {
+            if (onChange) onChange();
+          }
         })}
       />
       <label

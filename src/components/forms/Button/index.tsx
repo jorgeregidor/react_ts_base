@@ -3,7 +3,7 @@ import React from 'react';
 interface ButtonProps {
   children: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'danger';
   onClick?: () => void;
   className?: string;
   disabled?: boolean;
@@ -21,7 +21,8 @@ const Button: React.FC<ButtonProps> = ({
   
   const variantClasses = {
     primary: "bg-blue-500 hover:bg-blue-700 text-white focus:ring-blue-400",
-    secondary: "bg-gray-400 hover:bg-gray-700 text-white focus:ring-gray-300"
+    secondary: "bg-gray-400 hover:bg-gray-700 text-white focus:ring-gray-300",
+    danger: "bg-red-500 hover:bg-red-700 text-white focus:ring-red-400"
   };
   
   const disabledClasses = disabled ? "opacity-50 cursor-not-allowed" : "";

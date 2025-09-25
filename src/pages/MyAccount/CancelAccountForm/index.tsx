@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import CancelAccountModal from "./CancelAccountModal";
+import Button from "../../../components/forms/Button";
 
 const CancelAccountForm = () =>{
     const [showModal, setShowModal] = useState(false);
@@ -8,12 +9,13 @@ const CancelAccountForm = () =>{
 
     return (
         <>
-          <button
-              className={`bg-red-200 hover:bg-red-500 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-red-400"`}
-              onClick={()=> { setShowModal(true)}}
+          <Button
+              variant="danger"
+              onClick={() => setShowModal(true)}
+              className="bg-red-200 hover:bg-red-500"
             >
               {t('my_account.cancel_account.button')}
-          </button>
+          </Button>
           <CancelAccountModal
             showModal={showModal}
             setShowModal={setShowModal}
