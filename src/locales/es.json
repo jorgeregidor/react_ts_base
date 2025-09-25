@@ -134,6 +134,11 @@
         }
       }
     },
+    "sidebar": {
+      "my_account": "Mi cuenta",
+      "settings": "Configuración",
+      "logout": "Cerrar Sesión"
+    },
     "errors_handling": {
       "common": {
         "unknown": "No se ha podido realizar la peticion, intentelo de nuevo",

@@ -17,6 +17,11 @@
           "blank": "Password can't be blank"
         }
       }
+    },
+    "sidebar": {
+      "my_account": "My Account",
+      "settings": "Settings",
+      "logout": "Logout"
     }
   }
 }
