@@ -1,84 +1,94 @@
-import auth from './axiosCalls/auth';
-import http from './axiosCalls/base';
-import backendRoutes from './routes';
-import { 
-  SignUpCredentials, 
-  ForgotPasswordData, 
-  ResetPasswordData, 
-  ChangeEmailData, 
+import auth from "./axiosCalls/auth";
+import http from "./axiosCalls/base";
+import backendRoutes from "./routes";
+import {
+  SignUpCredentials,
+  ForgotPasswordData,
+  ResetPasswordData,
+  ChangeEmailData,
   ChangePasswordData,
   AuthResponse,
-  User
-} from '../types';
+  User,
+} from "../types";
 
-const signUp = (user: SignUpCredentials): Promise<AuthResponse> => 
-  auth.post(backendRoutes.signUpUrl, signUpPayload(user))
- 
+const signUp = (user: SignUpCredentials): Promise<AuthResponse> =>
+  auth.post(backendRoutes.signUpUrl, signUpPayload(user));
+
 const signUpPayload = (user: SignUpCredentials) => {
-  console.log(user)
-  console.log(backendRoutes.clientId)
+  console.log(user);
+  console.log(backendRoutes.clientId);
   return {
-    "email": user.email,
-    "password": user.password,
-    "password_confirmation": user.password,
-    "client_id": backendRoutes.clientId
-  }
-}
+    email: user.email,
+    password: user.password,
+    password_confirmation: user.password,
+    client_id: backendRoutes.clientId,
+  };
+};
 
-const forgotPassword = (user: ForgotPasswordData): Promise<any> => 
-  auth.post(backendRoutes.forgotPasswordUrl, forgotPasswordPayload(user))
- 
+const forgotPassword = (user: ForgotPasswordData): Promise<any> =>
+  auth.post(backendRoutes.forgotPasswordUrl, forgotPasswordPayload(user));
+
 const forgotPasswordPayload = (user: ForgotPasswordData) => {
   return {
-    "email": user.email,
-    "client_id": backendRoutes.clientId
-  }
-}
+    email: user.email,
+    client_id: backendRoutes.clientId,
+  };
+};
 
-const validPasswordToken = (data: { token: string; email: string }): Promise<any> => 
-  auth.post(backendRoutes.validPasswordTokenUrl, validPasswordTokenPayload(data))
- 
+const validPasswordToken = (data: {
+  token: string;
+  email: string;
+}): Promise<any> =>
+  auth.post(
+    backendRoutes.validPasswordTokenUrl,
+    validPasswordTokenPayload(data),
+  );
+
 const validPasswordTokenPayload = (data: { token: string; email: string }) => {
   return {
-    "email": data.email,
-    "token": data.token,
-    "client_id": backendRoutes.clientId
-  }
-}
+    email: data.email,
+    token: data.token,
+    client_id: backendRoutes.clientId,
+  };
+};
 
-const resetPassword = (data: ResetPasswordData): Promise<AuthResponse> => 
-  auth.post(backendRoutes.resetPasswordUrl, resetPasswordPayload(data))
- 
+const resetPassword = (data: ResetPasswordData): Promise<AuthResponse> =>
+  auth.post(backendRoutes.resetPasswordUrl, resetPasswordPayload(data));
+
 const resetPasswordPayload = (data: ResetPasswordData) => {
   return {
-    "token": data.token,
-    "client_id": backendRoutes.clientId, 
-    "password": data.password,
-    "password_confirmation": data.password
-  }
-}
+    token: data.token,
+    client_id: backendRoutes.clientId,
+    password: data.password,
+    password_confirmation: data.password,
+  };
+};
 
-const updateEmail = (data: ChangeEmailData): Promise<User> => 
-  http.patch(backendRoutes.userUrl(data.id), updateEmailPayload(data))
- 
+const updateEmail = (data: ChangeEmailData): Promise<User> =>
+  http.patch(backendRoutes.userUrl(data.id), updateEmailPayload(data));
+
 const updateEmailPayload = (data: ChangeEmailData) => {
   return {
-    "email": data.email
-  }
-}
+    email: data.email,
+  };
+};
 
-const updatePassword = (data: ChangePasswordData): Promise<any> => 
-  http.patch(backendRoutes.userPasswordUrl(data.id), updatePasswordPayload(data))
- 
+const updatePassword = (data: ChangePasswordData): Promise<any> =>
+  http.patch(
+    backendRoutes.userPasswordUrl(data.id),
+    updatePasswordPayload(data),
+  );
+
 const updatePasswordPayload = (data: ChangePasswordData) => {
   return {
-    "old_password" : data.old_password,
-    "password" : data.password,
-    "password_confirmation" : data.password_confirmation,
-  }
-}
+    old_password: data.old_password,
+    password: data.password,
+    password_confirmation: data.password_confirmation,
+  };
+};
 
-const cancelAccount = (): Promise<any> => http.delete(backendRoutes.deleteCurrentUser)
+const cancelAccount = (): Promise<any> =>
+  http.delete(backendRoutes.deleteCurrentUser);
 
 export default {
   signUp,
@@ -87,5 +97,5 @@ export default {
   resetPassword,
   updateEmail,
   updatePassword,
-  cancelAccount
+  cancelAccount,
 };

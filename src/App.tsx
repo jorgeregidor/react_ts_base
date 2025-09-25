@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Landing from "./pages/Landing";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
-import {UserContextProvider} from "./contexts/UserContext";
+import { UserContextProvider } from "./contexts/UserContext";
 import Other from "./pages/Other";
 import PrivateRoute from "./guards/PrivateRoute";
 import SignUp from "./pages/SignUp";
@@ -14,30 +14,29 @@ import MyAccount from "./pages/MyAccount";
 import LayoutAuth from "./components/LayoutAuth";
 
 function App() {
-
   return (
-      <UserContextProvider>
-        <>
+    <UserContextProvider>
+      <>
         <Routes>
           <Route path="/" element={<Landing />} />
-          <Route element={<LayoutAuth/>} >
+          <Route element={<LayoutAuth />}>
             <Route path="/login" element={<Login />} />
-            <Route path="/sign_up" element={<SignUp/>} />
-            <Route path="/forgot_password" element={<ForgotPassword/>} />
-            <Route path="/reset_password" element={<ResetPassword/>} />
+            <Route path="/sign_up" element={<SignUp />} />
+            <Route path="/forgot_password" element={<ForgotPassword />} />
+            <Route path="/reset_password" element={<ResetPassword />} />
           </Route>
-          <Route element={<PrivateRoute/>} >
-            <Route element={<Layout/>} >
-              <Route path="/dashboard" element={<Dashboard/>} />
-              <Route path="/other" element={<Other/>} />
-              <Route path="/invoices" element={<Invoices/>} />
-              <Route path="/users/my_account" element={<MyAccount/>} />
+          <Route element={<PrivateRoute />}>
+            <Route element={<Layout />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/other" element={<Other />} />
+              <Route path="/invoices" element={<Invoices />} />
+              <Route path="/users/my_account" element={<MyAccount />} />
             </Route>
           </Route>
         </Routes>
-        </>
-      </UserContextProvider>
-  )
+      </>
+    </UserContextProvider>
+  );
 }
 
-export default App
+export default App;

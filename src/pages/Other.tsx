@@ -3,10 +3,9 @@
 import { Link } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
-
 function Other() {
-  const { userData } =  useAuth()
-  
+  const { userData } = useAuth();
+
   return (
     <>
       Other

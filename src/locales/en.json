@@ -1,4 +1,4 @@
-{ 
+{
   "translation": {
     "login": {
       "title": "LOGIN",
@@ -9,13 +9,13 @@
         "forgot_password": "Forgot Password?",
         "sign_up": "Create new account"
       },
-      "errors":{
+      "errors": {
         "email": {
-            "blank": "Email can't be blank"
+          "blank": "Email can't be blank"
         },
         "password": {
-            "blank": "Password can't be blank"
-        } 
+          "blank": "Password can't be blank"
+        }
       }
     }
   }

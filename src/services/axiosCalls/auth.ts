@@ -1,8 +1,8 @@
-import axios, { AxiosInstance } from 'axios';
-import backendRoutes from '../routes'
+import axios, { AxiosInstance } from "axios";
+import backendRoutes from "../routes";
 
 const auth: AxiosInstance = axios.create({
-  baseURL: backendRoutes.baseUrl
+  baseURL: backendRoutes.baseUrl,
 });
 
 // auth.interceptors.request.use(
@@ -17,9 +17,6 @@ const auth: AxiosInstance = axios.create({
 //   error => Promise.reject(error)
 // );
 
-
-auth.interceptors.response.use(
-  response => response.data
-);
+auth.interceptors.response.use((response) => response.data);
 
 export default auth;

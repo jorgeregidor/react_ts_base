@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 interface InputProps {
   id: string;
@@ -21,7 +21,7 @@ const Input: React.FC<InputProps> = ({
   placeholder,
   validation = {},
   onChange,
-  defaultValue
+  defaultValue,
 }) => {
   return (
     <div className="relative group">
@@ -37,7 +37,7 @@ const Input: React.FC<InputProps> = ({
           ...validation,
           onChange: (_e: any) => {
             if (onChange) onChange();
-          }
+          },
         })}
       />
       <label
