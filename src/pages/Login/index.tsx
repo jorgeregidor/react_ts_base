@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth'
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import useLogin from "../../hooks/auth/useLogin";
+import Input from "../../components/forms/Input";
+import Button from "../../components/forms/Button";
 
 const Login = () => {
   const  { isLogged } = useAuth()
@@ -67,58 +69,45 @@ const Login = () => {
           </div>
         </div>
         <form className="bg-white rounded-lg p-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full  pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
-              id="email"
-              type="email"
-              {...register("email", {
-                required: t('login.errors.email.blank'),
-              })}
-              
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="email"
-            >
-              {t('login.labels.email')}
-            </label>
-          </div>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
-              id="password"
-              type="password"
-              {...register("password", {
-                required: t('login.errors.password.blank'),
-              })}
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="password"
-            >
-               {t('login.labels.password')}
-            </label>
-          </div>
+          <Input
+            id="email"
+            type="email"
+            register={register}
+            label={t('login.labels.email')}
+            error={errors.email}
+            validation={{
+              required: t('login.errors.email.blank'),
+            }}
+          />
+          <Input
+            id="password"
+            type="password"
+            register={register}
+            label={t('login.labels.password')}
+            error={errors.password}
+            validation={{
+              required: t('login.errors.password.blank'),
+            }}
+          />
           <Link
             className="text-blue-500 hover:text-blue-800 text-center block"
             to="/forgot_password"
           >
              {t('login.labels.forgot_password')}
           </Link>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          <Button
             type="submit"
+            variant="primary"
           >
-             {t('login.labels.sign_in')}
-          </button>
-          <div
-            className="flex justify-center bg-gray-400 hover:bg-gray-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-            onClick={()=>{navigate("/sign_up")}}
+            {t('login.labels.sign_in')}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate("/sign_up")}
           >
-            <div> {t('login.labels.sign_up')}</div>
-            
-          </div>
+            {t('login.labels.sign_up')}
+          </Button>
           
         </form>
     </>

@@ -4,6 +4,8 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth'
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
+import Input from "../../components/forms/Input";
+import Button from "../../components/forms/Button";
 
 const ResetPassword = () => {
   const { validPasswordToken, resetPassword } = useAuth()
@@ -56,8 +58,6 @@ const ResetPassword = () => {
     onLoad()
   },[onLoad])
 
-
-//<img src={Logo} alt="Logo" className="w-30 h-30 absolute top-4 left-4" />
   return (
       <>
       {!loading && <>
@@ -84,53 +84,42 @@ const ResetPassword = () => {
           </div>
         </div>
         {validToken &&<form className="bg-white rounded-lg p-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
-              id="password"
-              type="password"
-              {...register("password", {
-                required: t('reset_password.errors.password.blank'),
-                minLength: {
-                  value: 8,
-                  message:  t('reset_password.errors.password.format')
+          <Input
+            id="password"
+            type="password"
+            register={register}
+            label={t('reset_password.labels.password')}
+            error={errors.password}
+            validation={{
+              required: t('reset_password.errors.password.blank'),
+              minLength: {
+                value: 8,
+                message: t('reset_password.errors.password.format')
+              }
+            }}
+          />
+          <Input
+            id="password_confirmation"
+            type="password"
+            register={register}
+            label={t('reset_password.labels.password_confirmation')}
+            error={errors.password_confirmation}
+            validation={{
+              required: t('reset_password.errors.password_confirmation.blank'),
+              validate: (value: string) => {
+                if (watch('password') != value) {
+                  return t('reset_password.errors.password_confirmation.different');
                 }
-              })}
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="password"
-            >
-               {t('reset_password.labels.password')}
-            </label>
-          </div>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.password_confirmation ? "border-gray-300" : "border-red-600"}`}
-              id="password_confirmation"
-              type="password"
-              {...register("password_confirmation", {
-                required: t('reset_password.errors.password_confirmation.blank'),
-                validate: (value) => {
-                  if (watch('password') != value) {
-                    return t('reset_password.errors.password_confirmation.different');
-                  }
-              }})}
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.password_confirmation ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="password_confirmation"
-            >
-               {t('reset_password.labels.password_confirmation')}
-            </label>
-          </div>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              }
+            }}
+          />
+          <Button
             type="submit"
-            onClick={()=> {setServerError(undefined)}}
+            variant="primary"
+            onClick={() => setServerError(undefined)}
           >
-             {t('reset_password.labels.submit')}
-          </button>  
+            {t('reset_password.labels.submit')}
+          </Button>  
         </form>}
       </>}
       </>

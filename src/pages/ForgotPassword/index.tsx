@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth'
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
+import Input from "../../components/forms/Input";
+import Button from "../../components/forms/Button";
 
 const ForgotPassword = () => {
   const  { isLogged } = useAuth()
@@ -60,30 +62,23 @@ const ForgotPassword = () => {
         <form className="bg-white rounded-lg p-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
           {!requested &&
             <>
-              <div className="relative group">
-                <input
-                  className={`border rounded-lg w-full  pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
-                  id="email"
-                  type="email"
-                  {...register("email", {
-                    required: t('forgot_password.errors.email.blank'),
-                  })}
-                  
-                />
-                <label
-                  className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-                  htmlFor="email"
-                >
-                  {t('forgot_password.labels.email')}
-                </label>
-              </div>
-              <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+              <Input
+                id="email"
+                type="email"
+                register={register}
+                label={t('forgot_password.labels.email')}
+                error={errors.email}
+                validation={{
+                  required: t('forgot_password.errors.email.blank'),
+                }}
+              />
+              <Button
                 type="submit"
-                onClick={()=> {setServerError(undefined)}}
+                variant="primary"
+                onClick={() => setServerError(undefined)}
               >
                 {t('forgot_password.labels.submit')}
-              </button>
+              </Button>
             </>
           }
           { requested && 
@@ -93,12 +88,13 @@ const ForgotPassword = () => {
               </div>
             </>
           }
-          <div
-            className="flex justify-center bg-gray-400 hover:bg-gray-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-            onClick={()=> navigate("/login")}
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate("/login")}
           >
-             {t('forgot_password.labels.back')}
-          </div>
+            {t('forgot_password.labels.back')}
+          </Button>
           
         </form>
     </>

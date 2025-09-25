@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import { useTranslation } from 'react-i18next';
 import useAuth from '../../hooks/useAuth'
+import Input from "../../components/forms/Input";
+import Button from "../../components/forms/Button";
 
 const SignUp = () => {
   const  { isLogged } = useAuth()
@@ -20,7 +22,6 @@ const SignUp = () => {
 
 
   const [serverError, setServerError] = useState<string | undefined>(undefined);
-  //const { onUserChange } = useContext(AuthContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -72,82 +73,65 @@ const SignUp = () => {
           </div>
         </div>
         <form className="bg-white rounded-lg p-8 space-y-4" onSubmit={handleSubmit(onSubmit)}>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full  pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
-              id="email"
-              type="email"
-              {...register("email", {
-                required: t('sign_up.errors.email.blank'),
-              })}
-              
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="email"
-            >
-              {t('sign_up.labels.email')}
-            </label>
-          </div>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.email ? "border-gray-300" : "border-red-600"}`}
-              id="password"
-              type="password"
-              {...register("password", {
-                required: t('sign_up.errors.password.blank'),
-                minLength: {
-                  value: 8,
-                  message:  t('sign_up.errors.password.format')
+          <Input
+            id="email"
+            type="email"
+            register={register}
+            label={t('sign_up.labels.email')}
+            error={errors.email}
+            validation={{
+              required: t('sign_up.errors.email.blank'),
+            }}
+          />
+          <Input
+            id="password"
+            type="password"
+            register={register}
+            label={t('sign_up.labels.password')}
+            error={errors.password}
+            validation={{
+              required: t('sign_up.errors.password.blank'),
+              minLength: {
+                value: 8,
+                message: t('sign_up.errors.password.format')
+              }
+            }}
+          />
+          <Input
+            id="password_confirmation"
+            type="password"
+            register={register}
+            label={t('sign_up.labels.password_confirmation')}
+            error={errors.password_confirmation}
+            validation={{
+              required: t('sign_up.errors.password_confirmation.blank'),
+              validate: (value: string) => {
+                if (watch('password') != value) {
+                  return t('sign_up.errors.password_confirmation.different');
                 }
-              })}
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.email ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="password"
-            >
-               {t('sign_up.labels.password')}
-            </label>
-          </div>
-          <div className="relative group">
-            <input
-              className={`border rounded-lg w-full pt-8 pb-4 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-500  ${!errors.password_confirmation ? "border-gray-300" : "border-red-600"}`}
-              id="password_confirmation"
-              type="password"
-              {...register("password_confirmation", {
-                required: t('sign_up.errors.password_confirmation.blank'),
-                validate: (value) => {
-                  if (watch('password') != value) {
-                    return t('sign_up.errors.password_confirmation.different');
-                  }
-              }})}
-            />
-            <label
-              className={`absolute top-2 left-4 text-sm transition-all duration-300 pointer-events-none group-focus-within:text-blue-500  ${!errors.password_confirmation ? "text-gray-300" : "text-red-600"}`}
-              htmlFor="password_confirmation"
-            >
-               {t('sign_up.labels.password_confirmation')}
-            </label>
-          </div>
+              }
+            }}
+          />
           <Link
             className="text-blue-500 hover:text-blue-800 text-center block"
             to="/forgot_password"
           >
              {t('login.labels.forgot_password')}
           </Link>
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-blue-400"
+          <Button
             type="submit"
-            onClick={()=> {setServerError(undefined)}}
+            variant="primary"
+            onClick={() => setServerError(undefined)}
           >
-             {t('login.labels.sign_up')}
-          </button>
-          <div
-            className="flex justify-center bg-gray-400 hover:bg-gray-700 text-white font-bold py-4 px-6 rounded-lg w-full focus:outline-none focus:ring-2 focus:ring-gray-300"
-            onClick={()=> navigate("/login")}
+            {t('login.labels.sign_up')}
+          </Button>
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={() => navigate("/login")}
           >
-             {t('sign_up.labels.login')}
-          </div>
+            {t('sign_up.labels.login')}
+          </Button>
           
         </form>
         </>
