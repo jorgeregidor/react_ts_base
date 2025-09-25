@@ -1,5 +1,6 @@
 const baseUrl =  import.meta.env.VITE_BASE_API_URL || 'http://localhost:3000'
 const loginUrl = "/auth/token"
+const logoutUrl = "/auth/logout"
 const signUpUrl = "/auth/signup"
 const currentUserUrl = "/users/current"
 const forgotPasswordUrl = "/auth/forgot_password"
@@ -15,6 +16,7 @@ const secretId = import.meta.env.VITE_BASE_SECRET_ID
 export default {
     baseUrl,
     loginUrl,
+    logoutUrl,
     signUpUrl,
     forgotPasswordUrl,
     validPasswordTokenUrl,

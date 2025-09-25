@@ -80,14 +80,11 @@ const updatePasswordPayload = (data: ChangePasswordData) => {
 
 const cancelAccount = (): Promise<any> => http.delete(backendRoutes.deleteCurrentUser)
 
-const me = (): Promise<User> => http.get(backendRoutes.currentUserUrl)
-
 export default {
   signUp,
   forgotPassword,
   validPasswordToken,
   resetPassword,
-  me,
   updateEmail,
   updatePassword,
   cancelAccount

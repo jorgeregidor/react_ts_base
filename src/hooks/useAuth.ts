@@ -4,6 +4,7 @@ import userService from "./../services/users";
 import { useNavigate } from "react-router-dom";
 import useStorage from "./useStorage";
 import ErrorsHandling from "../services/errors";
+import { currentUserService } from "../services/userServices/currentUserService";
 import { 
   SignUpCredentials, 
   ForgotPasswordData, 
@@ -28,7 +29,7 @@ export default function useAuth() {
         const authResponse = await userService.signUp(user);
         result.current = {response: authResponse, error: false}
         setTokens(authResponse.access_token, authResponse.refresh_token)
-        const userResponse = await userService.me();
+        const userResponse = await currentUserService();
         setUserData(userResponse)
     } catch (error: unknown) {
       if (error instanceof AxiosError) {
@@ -80,7 +81,7 @@ export default function useAuth() {
         const authResponse = await userService.resetPassword(data);
         result.current = {response: authResponse, error: false}
         setTokens(authResponse.access_token, authResponse.refresh_token)
-        const userResponse = await userService.me();
+        const userResponse = await currentUserService();
         console.log(userResponse)
         setUserData(userResponse)
     } catch (error) {
@@ -112,28 +113,8 @@ export default function useAuth() {
   }, [cleanTokens, navigate, setUserData])
 
 
-  const logout = (): void => {
-    cleanTokens()
-    setUserData(null)
-    navigate('/login')
-  }
-
-  const getUserData = async (): Promise<void> => {
-   if (!userData) {
-      try {
-        const userResponse = await userService.me();
-        setUserData(userResponse)
-      } catch (error) {
-        logout()
-      }
-       
-   }
-  }
-
   return {
     isLogged,
-    logout,
-    getUserData,
     userData, 
     result,
     signUp,

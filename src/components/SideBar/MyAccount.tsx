@@ -2,11 +2,13 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useAuth from './../../hooks/useAuth'
 import { FaUser } from "react-icons/fa";
+import useLogout from './../../hooks/auth/useLogout'
 
 const MyAccount = () => {
 
   const [myAccountOpen, setMyAccountOpen] = useState(false)
-  const {userData, logout} =  useAuth()
+  const {userData} =  useAuth()
+  const { logout } = useLogout()
   const active = window.location.pathname.includes("/users")
 
   const nickname = userData?.email ? userData?.email.split('@')[0] : 'ERROR'
