@@ -1,5 +1,5 @@
 import auth from "../axiosCalls/auth";
-import backendRoutes from "../routes";
+import { clientId, forgotPasswordUrl } from "../apiRoutes";
 
 export interface ForgotPasswordServiceProps {
   email: string;
@@ -8,11 +8,11 @@ export interface ForgotPasswordServiceProps {
 export const forgotPasswordService = (
   user: ForgotPasswordServiceProps,
 ): Promise<any> =>
-  auth.post(backendRoutes.forgotPasswordUrl, forgotPasswordPayload(user));
+  auth.post(forgotPasswordUrl, forgotPasswordPayload(user));
 
 const forgotPasswordPayload = (user: ForgotPasswordServiceProps) => {
   return {
     email: user.email,
-    client_id: backendRoutes.clientId,
+    client_id: clientId,
   };
 };

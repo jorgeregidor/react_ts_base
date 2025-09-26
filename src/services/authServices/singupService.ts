@@ -1,6 +1,6 @@
 import { AuthResponse } from "@/types";
 import auth from "../axiosCalls/auth";
-import backendRoutes from "../routes";
+import { signUpUrl, clientId } from "../apiRoutes";
 
 export interface SignUpServiceProps {
   email: string;
@@ -11,13 +11,13 @@ export interface SignUpServiceProps {
 export const signUpService = (
   user: SignUpServiceProps,
 ): Promise<AuthResponse> =>
-  auth.post(backendRoutes.signUpUrl, signUpPayload(user));
+  auth.post(signUpUrl, signUpPayload(user));
 
 const signUpPayload = (user: SignUpServiceProps) => {
   return {
     email: user.email,
     password: user.password,
     password_confirmation: user.password,
-    client_id: backendRoutes.clientId,
+    client_id: clientId,
   };
 };

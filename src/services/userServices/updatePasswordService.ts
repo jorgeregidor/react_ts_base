@@ -1,5 +1,5 @@
 import http from "../axiosCalls/base";
-import backendRoutes from "../routes";
+import { userPasswordUrl } from "../apiRoutes";
 
 export interface UpdatePasswordServiceProps {
   id: string;
@@ -12,7 +12,7 @@ export const updatePasswordService = (
   data: UpdatePasswordServiceProps,
 ): Promise<any> =>
   http.patch(
-    backendRoutes.userPasswordUrl(data.id),
+    userPasswordUrl(data.id),
     updatePasswordPayload(data),
   );
 

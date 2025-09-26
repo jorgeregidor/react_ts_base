@@ -1,5 +1,5 @@
 import http from "../axiosCalls/base";
-import backendRoutes from "../routes";
+import { deleteCurrentUser } from "../apiRoutes";
 
 export const cancelAccountService = (): Promise<any> =>
-  http.delete(backendRoutes.deleteCurrentUser);
+  http.delete(deleteCurrentUser);

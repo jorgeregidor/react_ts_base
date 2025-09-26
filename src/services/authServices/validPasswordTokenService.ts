@@ -1,5 +1,5 @@
 import auth from "../axiosCalls/auth";
-import backendRoutes from "../routes";
+import { validPasswordTokenUrl, clientId } from "../apiRoutes";
 
 interface ValidPasswordTokenData {
   token: string;
@@ -10,7 +10,7 @@ export const validPasswordTokenService = (
   data: ValidPasswordTokenData,
 ): Promise<any> =>
   auth.post(
-    backendRoutes.validPasswordTokenUrl,
+    validPasswordTokenUrl,
     validPasswordTokenPayload(data),
   );
 
@@ -18,6 +18,6 @@ const validPasswordTokenPayload = (data: ValidPasswordTokenData) => {
   return {
     email: data.email,
     token: data.token,
-    client_id: backendRoutes.clientId,
+    client_id: clientId,
   };
 };

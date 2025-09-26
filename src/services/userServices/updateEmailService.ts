@@ -1,6 +1,6 @@
 import { User } from "../../types";
 import http from "../axiosCalls/base";
-import backendRoutes from "../routes";
+import { userUrl } from "../apiRoutes";
 
 export interface UpdateEmailServiceProps {
   id: string;
@@ -11,7 +11,7 @@ export interface UpdateEmailServiceProps {
 export const updateEmailService = (
   data: UpdateEmailServiceProps,
 ): Promise<User> =>
-  http.patch(backendRoutes.userUrl(data.id), updateEmailPayload(data));
+  http.patch(userUrl(data.id), updateEmailPayload(data));
 
 const updateEmailPayload = (data: UpdateEmailServiceProps) => {
   return {

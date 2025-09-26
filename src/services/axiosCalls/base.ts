@@ -1,8 +1,8 @@
 import axios from "axios";
-import backendRoutes from "../routes";
+import { baseUrl } from "../apiRoutes";
 
 const http = axios.create({
-  baseURL: backendRoutes.baseUrl,
+  baseURL: baseUrl,
 });
 
 http.interceptors.request.use(

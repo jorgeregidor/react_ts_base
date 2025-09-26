@@ -1,8 +1,8 @@
 import axios, { AxiosInstance } from "axios";
-import backendRoutes from "../routes";
+import { baseUrl } from "../apiRoutes";
 
 const auth: AxiosInstance = axios.create({
-  baseURL: backendRoutes.baseUrl,
+  baseURL: baseUrl,
 });
 
 // auth.interceptors.request.use(

@@ -1,13 +1,13 @@
 import auth from "../axiosCalls/auth";
-import backendRoutes from "../routes";
+import { logoutUrl, clientId, secretId } from "../apiRoutes";
 
 export const logoutService = (): Promise<any> =>
-  auth.post(backendRoutes.logoutUrl, logoutServicePayload());
+  auth.post(logoutUrl, logoutServicePayload());
 
 const logoutServicePayload = () => {
   return {
     token: localStorage.getItem("accessToken"),
-    client_id: backendRoutes.clientId,
-    client_secret: backendRoutes.secretId,
+    client_id: clientId,
+    client_secret: secretId,
   };
 };
