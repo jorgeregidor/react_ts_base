@@ -8,13 +8,11 @@ import Button from "../../../../components/forms/Button";
 import Modal from "../../../../components/Modal";
 
 interface CancelAccountModalProps {
-  showModal: boolean;
-  setShowModal: (showModal: boolean) => void;
+  closeModal: () => void;
 }
 
 const CancelAccountModal = ({
-  showModal,
-  setShowModal,
+  closeModal,
 }: CancelAccountModalProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -28,9 +26,9 @@ const CancelAccountModal = ({
     formState: { errors },
   } = useForm();
 
-  const closeModal = () => {
+  const closeCancelAcocountModal = () => {
     reset();
-    setShowModal(false);
+    closeModal()
   };
 
   const onSubmit = async () => {
@@ -43,11 +41,9 @@ const CancelAccountModal = ({
     }
   };
 
-  if (!showModal) return null;
-
   return (
     <Modal
-      closeModal={closeModal}
+      closeModal={closeCancelAcocountModal}
       title={t("my_account.cancel_account.modal.title")}
     >
       <div className="relative p-6 flex-auto">

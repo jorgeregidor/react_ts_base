@@ -23,7 +23,6 @@ const ChangePasswordForm = () => {
     formState: { errors },
   } = useForm();
 
-  // Watch specific form fields to enable/disable the submit button
   const oldPassword = watch("old_password");
   const password = watch("password");
   const passwordConfirmation = watch("password_confirmation");
