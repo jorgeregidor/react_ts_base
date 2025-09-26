@@ -1,13 +1,19 @@
 import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAuth from "./../../hooks/useAuth";
 import { FaUser } from "react-icons/fa";
 import useLogout from "./../../hooks/auth/useLogout";
+import UserContext from "../../contexts/UserContext";
+import { useContext } from "react";
 
 const MyAccount = () => {
   const [myAccountOpen, setMyAccountOpen] = useState(false);
-  const { userData } = useAuth();
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("MyAccount must be used within a UserContextProvider");
+  }
+
+  const { userData } = context;
   const { logout } = useLogout();
   const { t } = useTranslation();
   const active = window.location.pathname.includes("/users");

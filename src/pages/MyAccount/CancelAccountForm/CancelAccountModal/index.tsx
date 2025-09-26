@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../../../hooks/useAuth";
+import useCancelAccount from "../../../../hooks/auth/useCancelAccount";
 import { useNavigate } from "react-router-dom";
 import Input from "../../../../components/forms/Input";
 import Button from "../../../../components/forms/Button";
@@ -17,7 +17,7 @@ const CancelAccountModal = ({
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | undefined>(undefined);
-  const { cancelAccount } = useAuth();
+  const { error, cancelAccount } = useCancelAccount();
 
   const {
     register,
@@ -33,9 +33,9 @@ const CancelAccountModal = ({
 
   const onSubmit = async () => {
     setServerError(undefined);
-    const result = await cancelAccount();
-    if (result?.error) {
-      setServerError(t(result.error));
+    await cancelAccount();
+    if (error) {
+      setServerError(t(error));
     } else {
       navigate("/sign_up");
     }

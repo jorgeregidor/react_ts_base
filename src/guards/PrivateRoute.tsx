@@ -1,10 +1,10 @@
 import { Navigate, Outlet } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
+import useStorage from "../hooks/useStorage";
 import { useEffect } from "react";
 import useCurrentUser from "../hooks/user/useCurrentUser";
 
 const PrivateRoute = () => {
-  const { isLogged } = useAuth();
+  const { isLogged } = useStorage();
   const { fetchCurrentUser } = useCurrentUser();
 
   useEffect(() => {

@@ -3,13 +3,13 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../hooks/useAuth";
 import useSignup from "../../hooks/auth/useSignup";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
+import useStorage from "../../hooks/useStorage";
 
 const SignUp = () => {
-  const { isLogged } = useAuth();
+  const { isLogged } = useStorage();
   const [logged, setLogged] = useState(isLogged());
   const { error, loading, signup, data } = useSignup();
   const { t } = useTranslation();
@@ -42,7 +42,6 @@ const SignUp = () => {
     await signup(user);
     
   };
-  //<img src={Logo} alt="Logo" className="w-30 h-30 absolute top-4 left-4" />
   return (
     <>
       <div className="flex justify-center w-full">

@@ -2,14 +2,14 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../hooks/useAuth";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import useLogin from "../../hooks/auth/useLogin";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
+import useStorage from "../../hooks/useStorage";
 
 const Login = () => {
-  const { isLogged } = useAuth();
+  const { isLogged } = useStorage();
   const [logged, setLogged] = useState(isLogged());
   const { data, error, loading, login } = useLogin();
   const { t } = useTranslation();

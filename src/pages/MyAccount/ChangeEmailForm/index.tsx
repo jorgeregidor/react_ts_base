@@ -1,17 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../../hooks/useAuth";
 import useUser from "../../../hooks/useUser";
 import Input from "../../../components/forms/Input";
 import Button from "../../../components/forms/Button";
+import UserContext from "../../../contexts/UserContext";
 
 const ChangeEmailForm = () => {
   const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [success, setSuccess] = useState<string | undefined>(undefined);
-  const { userData } = useAuth();
   const { updateEmail } = useUser();
+
+  const context = useContext(UserContext);
+  if (!context) {
+    throw new Error("useAuth must be used within a UserContextProvider");
+  }
+
+  const { userData } = context;
 
   const { t } = useTranslation();
 
@@ -22,7 +28,6 @@ const ChangeEmailForm = () => {
     formState: { errors },
   } = useForm();
 
-  // Watch specific form fields to enable/disable the submit button
   const email = watch("email");
 
   useEffect(() => {

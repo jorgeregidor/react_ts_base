@@ -2,15 +2,16 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../hooks/useAuth";
+import useStorage from "../../hooks/useStorage";
+import useForgotPassword from "../../hooks/auth/useForgotPassword";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
 
 const ForgotPassword = () => {
-  const { isLogged } = useAuth();
+  const { isLogged } = useStorage();
   const [requested, setRequested] = useState(false);
-  const { forgotPassword } = useAuth();
+  const { forgotPassword, loading, error } = useForgotPassword();
   const { t } = useTranslation();
 
   const {
@@ -28,10 +29,9 @@ const ForgotPassword = () => {
 
   const onSubmit = async (user: any) => {
     setServerError(undefined);
-    const result = await forgotPassword(user);
-    console.log(result);
-    if (result?.error) {
-      setServerError(result?.error);
+    await forgotPassword(user);
+    if (error) {
+      setServerError(error);
     } else {
       setRequested(true);
     }
@@ -67,8 +67,9 @@ const ForgotPassword = () => {
               type="submit"
               variant="primary"
               onClick={() => setServerError(undefined)}
+              disabled={loading}
             >
-              {t("forgot_password.labels.submit")}
+              {loading ? t("common.loading") : t("forgot_password.labels.submit")}
             </Button>
           </>
         )}

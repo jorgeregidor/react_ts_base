@@ -1,19 +1,14 @@
 //import { Link, NavLink } from 'react-router-dom';
 
 import { Link } from "react-router-dom";
-import useAuth from "./../../hooks/useAuth";
 import PageTitle from "./../../components/Layout/PageTitle";
 
 function Dashboard() {
-  const { logout } = useAuth();
 
   return (
     <>
       <PageTitle title={"Dashboard"} />
       <Link to="/login">login</Link>
-      <Link to="#" onClick={logout}>
-        logout
-      </Link>
       <Link to="/other">other</Link>
     </>
   );
