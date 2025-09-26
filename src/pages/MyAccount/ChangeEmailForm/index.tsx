@@ -1,16 +1,16 @@
 import { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
-import useUser from "../../../hooks/useUser";
 import Input from "../../../components/forms/Input";
 import Button from "../../../components/forms/Button";
 import UserContext from "../../../contexts/UserContext";
+import useUpdateEmail from "../../../hooks/user/useUpdateEmail";
 
 const ChangeEmailForm = () => {
   const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [success, setSuccess] = useState<string | undefined>(undefined);
-  const { updateEmail } = useUser();
+  const { error, loading, updateEmail } = useUpdateEmail();
 
   const context = useContext(UserContext);
   if (!context) {
@@ -37,9 +37,9 @@ const ChangeEmailForm = () => {
   const onSubmit = async (data: any) => {
     setServerError(undefined);
     data = { ...data, id: userData?.id };
-    const result = await updateEmail(data);
-    if (result?.error) {
-      setServerError(t(result.error));
+    await updateEmail(data);
+    if (error) {
+      setServerError(t(error));
     } else {
       setSuccess(t("my_account.change_email.requested"));
     }
@@ -73,7 +73,7 @@ const ChangeEmailForm = () => {
         <Button
           type="submit"
           variant="primary"
-          disabled={disabled}
+          disabled={disabled || loading}
           onClick={() => setServerError(undefined)}
           className={disabled ? "bg-blue-200" : ""}
         >

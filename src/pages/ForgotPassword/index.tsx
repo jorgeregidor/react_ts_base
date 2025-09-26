@@ -31,7 +31,7 @@ const ForgotPassword = () => {
     setServerError(undefined);
     await forgotPassword(user);
     if (error) {
-      setServerError(error);
+      setServerError(t(error));
     } else {
       setRequested(true);
     }

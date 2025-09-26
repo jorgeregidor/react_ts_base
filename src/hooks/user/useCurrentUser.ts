@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../../contexts/UserContext";
 import { currentUserService } from "../../services/userServices/currentUserService";
 import useStorage from "../useStorage";
@@ -16,7 +16,7 @@ export default function useCurrentUser() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
 
-  const fetchCurrentUser = useCallback(async (): Promise<void> => {
+  const fetchCurrentUser = async (): Promise<void> => {
     if (!userData) {
       setLoading(true);
       setError(undefined);
@@ -32,7 +32,7 @@ export default function useCurrentUser() {
         setLoading(false);
       }
     }
-  }, [userData, setUserData, cleanTokens]);
+  };
 
   return {
     data: userData,

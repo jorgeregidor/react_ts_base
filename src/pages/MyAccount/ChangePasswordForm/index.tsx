@@ -2,9 +2,9 @@ import { useState, useEffect, useContext } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
 import UserContext from "../../../contexts/UserContext";
-import useUser from "../../../hooks/useUser";
 import Input from "../../../components/forms/Input";
 import Button from "../../../components/forms/Button";
+import useUpdatePassword from "../../../hooks/user/useUpdatePassword";
 
 const ChangePasswordForm = () => {
   const [serverError, setServerError] = useState<string | undefined>(undefined);
@@ -16,7 +16,7 @@ const ChangePasswordForm = () => {
   }
 
   const { userData } = context;
-  const { updatePassword } = useUser();
+  const { error, loading, updatePassword } = useUpdatePassword();
 
   const { t } = useTranslation();
 
@@ -34,15 +34,15 @@ const ChangePasswordForm = () => {
 
   useEffect(() => {
     const hasAnyValue = oldPassword || password || passwordConfirmation;
-    setDisabled(!hasAnyValue);
+    setDisabled(!hasAnyValue || loading);
   }, [oldPassword, password, passwordConfirmation]);
 
   const onSubmit = async (data: any) => {
     setServerError(undefined);
     data = { ...data, id: userData?.id };
-    const result = await updatePassword(data);
-    if (result?.error) {
-      setServerError(t(result.error));
+    await updatePassword(data);
+    if (error) {
+      setServerError(t(error));
     } else {
       setSuccess(t("my_account.change_password.success"));
       reset();
