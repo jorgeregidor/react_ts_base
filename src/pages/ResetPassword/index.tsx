@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import useValidPasswordToken from "../../hooks/auth/useValidPasswordToken";
@@ -28,14 +28,12 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm();
 
-  // const [loading, setLoading] = useState(true);
   const [validToken, setValidToken] = useState(false);
   const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const onLoad = async () => {
-    // if (loading) {
     setServerError(undefined);
     const email = searchParams.get("email") || "";
     const token = searchParams.get("token") || "";
@@ -45,9 +43,6 @@ const ResetPassword = () => {
     } else {
       setValidToken(true);
     }
-    // setLoading(false);
-    // }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   };
 
   const onSubmit = async (data: any) => {
