@@ -2,7 +2,6 @@ import auth from "./axiosCalls/auth";
 import http from "./axiosCalls/base";
 import backendRoutes from "./routes";
 import {
-  SignUpCredentials,
   ForgotPasswordData,
   ResetPasswordData,
   ChangeEmailData,
@@ -10,20 +9,6 @@ import {
   AuthResponse,
   User,
 } from "../types";
-
-const signUp = (user: SignUpCredentials): Promise<AuthResponse> =>
-  auth.post(backendRoutes.signUpUrl, signUpPayload(user));
-
-const signUpPayload = (user: SignUpCredentials) => {
-  console.log(user);
-  console.log(backendRoutes.clientId);
-  return {
-    email: user.email,
-    password: user.password,
-    password_confirmation: user.password,
-    client_id: backendRoutes.clientId,
-  };
-};
 
 const forgotPassword = (user: ForgotPasswordData): Promise<any> =>
   auth.post(backendRoutes.forgotPasswordUrl, forgotPasswordPayload(user));
@@ -87,15 +72,10 @@ const updatePasswordPayload = (data: ChangePasswordData) => {
   };
 };
 
-const cancelAccount = (): Promise<any> =>
-  http.delete(backendRoutes.deleteCurrentUser);
-
 export default {
-  signUp,
   forgotPassword,
   validPasswordToken,
   resetPassword,
   updateEmail,
   updatePassword,
-  cancelAccount,
 };

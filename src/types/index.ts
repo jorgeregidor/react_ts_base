@@ -3,16 +3,9 @@ export interface User {
   id: string;
   email: string;
   name?: string;
-  created_at: string;
-  updated_at: string;
 }
 
 // Auth types
-export interface SignUpCredentials {
-  email: string;
-  password: string;
-  name?: string;
-}
 
 export interface AuthResponse {
   access_token: string;
@@ -41,11 +34,6 @@ export interface ChangePasswordData {
   password_confirmation: string;
 }
 
-// Context types
-export interface UserContextType {
-  userData: User | null;
-  setUserData: (user: User | null) => void;
-}
 
 // Hook result types
 export interface HookResult<T = any> {

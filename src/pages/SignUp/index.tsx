@@ -4,13 +4,14 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import { useTranslation } from "react-i18next";
 import useAuth from "../../hooks/useAuth";
+import useSignup from "../../hooks/auth/useSignup";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
 
 const SignUp = () => {
   const { isLogged } = useAuth();
   const [logged, setLogged] = useState(isLogged());
-  const { signUp } = useAuth();
+  const { error, loading, signup, data } = useSignup();
   const { t } = useTranslation();
 
   const {
@@ -24,19 +25,22 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("isLogged", logged);
     if (logged) navigate("/dashboard");
   }, [logged, navigate]);
 
+  useEffect(() => {
+    if (loading) return;
+    if (error) {
+      console.log(error);
+      setServerError(t(error));
+    }
+    if (data && !error) setLogged(true);
+  }, [loading, error]);
+
   const onSubmit = async (user: any) => {
     setServerError(undefined);
-    const result = await signUp(user);
-    console.log(result);
-    if (result?.error) {
-      setServerError(result?.error);
-    } else {
-      setLogged(true);
-    }
+    await signup(user);
+    
   };
   //<img src={Logo} alt="Logo" className="w-30 h-30 absolute top-4 left-4" />
   return (

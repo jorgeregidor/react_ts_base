@@ -1,5 +1,10 @@
 import { useState, createContext, ReactNode } from "react";
-import { UserContextType, User } from "../types";
+import { User } from "../types";
+
+export interface UserContextType {
+  userData: User | null;
+  setUserData: (user: User | null) => void;
+}
 
 const Context = createContext<UserContextType | undefined>(undefined);
 

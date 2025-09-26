@@ -1,12 +1,10 @@
 import { useCallback, useContext, useRef } from "react";
 import UserContext from "../contexts/UserContext";
 import userService from "./../services/users";
-import { useNavigate } from "react-router-dom";
 import useStorage from "./useStorage";
 import ErrorsHandling from "../services/errors";
 import { currentUserService } from "../services/userServices/currentUserService";
 import {
-  SignUpCredentials,
   ForgotPasswordData,
   ResetPasswordData,
   HookResult,
@@ -21,36 +19,8 @@ export default function useAuth() {
 
   const { userData, setUserData } = context;
   const result = useRef<HookResult | undefined>(undefined);
-  const navigate = useNavigate();
   const { setTokens, cleanTokens, isLogged } = useStorage();
 
-  const signUp = useCallback(
-    async (user: SignUpCredentials): Promise<HookResult> => {
-      try {
-        const authResponse = await userService.signUp(user);
-        result.current = { response: authResponse, error: false };
-        setTokens(authResponse.access_token, authResponse.refresh_token);
-        const userResponse = await currentUserService();
-        setUserData(userResponse);
-      } catch (error: unknown) {
-        if (error instanceof AxiosError) {
-          result.current = {
-            response: null,
-            error: ErrorsHandling("sign_up", error),
-          };
-        } else {
-          result.current = {
-            response: null,
-            error: "errors_handling.common.unknown",
-          };
-        }
-        cleanTokens();
-      }
-
-      return result.current;
-    },
-    [cleanTokens, setTokens, setUserData],
-  );
 
   const forgotPassword = useCallback(
     async (user: ForgotPasswordData): Promise<HookResult> => {
@@ -128,38 +98,12 @@ export default function useAuth() {
     [cleanTokens, setTokens, setUserData],
   );
 
-  const cancelAccount = useCallback(async (): Promise<
-    HookResult | undefined
-  > => {
-    try {
-      await userService.cancelAccount();
-      cleanTokens();
-      setUserData(null);
-      navigate("/login");
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        result.current = {
-          response: null,
-          error: ErrorsHandling("cancel_account", error),
-        };
-      } else {
-        result.current = {
-          response: null,
-          error: "errors_handling.common.unknown",
-        };
-      }
-    }
-    return result.current;
-  }, [cleanTokens, navigate, setUserData]);
-
   return {
     isLogged,
     userData,
     result,
-    signUp,
     forgotPassword,
     validPasswordToken,
     resetPassword,
-    cancelAccount,
   };
 }
