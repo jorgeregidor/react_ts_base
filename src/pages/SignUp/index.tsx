@@ -40,7 +40,6 @@ const SignUp = () => {
   const onSubmit = async (user: any) => {
     setServerError(undefined);
     await signup(user);
-    
   };
   return (
     <>

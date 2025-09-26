@@ -30,7 +30,6 @@ export default function useSignup() {
       });
       setTokens(authResponse.access_token, authResponse.refresh_token);
       setData(authResponse);
-      
     } catch (err: unknown) {
       cleanTokens();
       setError(ErrorsHandling("sign_up", err as AxiosError));

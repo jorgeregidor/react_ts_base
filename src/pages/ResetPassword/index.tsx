@@ -2,13 +2,23 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import useAuth from "../../hooks/useAuth";
+import useValidPasswordToken from "../../hooks/auth/useValidPasswordToken";
+import useResetPassword from "../../hooks/auth/useResetPassword";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
 
 const ResetPassword = () => {
-  const { validPasswordToken, resetPassword } = useAuth();
+  const {
+    validPasswordToken,
+    loading: tokenLoading,
+    error: tokenError,
+  } = useValidPasswordToken();
+  const {
+    resetPassword,
+    loading: resetLoading,
+    error: resetError,
+  } = useResetPassword();
   const { t } = useTranslation();
 
   const {
@@ -18,39 +28,37 @@ const ResetPassword = () => {
     formState: { errors },
   } = useForm();
 
-  const [loading, setLoading] = useState(true);
+  // const [loading, setLoading] = useState(true);
   const [validToken, setValidToken] = useState(false);
   const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const onLoad = useCallback(async () => {
-    if (loading) {
-      setServerError(undefined);
-      const email = searchParams.get("email") || "";
-      const token = searchParams.get("token") || "";
-      const result = await validPasswordToken({ email, token });
-      console.log(result);
-      if (result?.error) {
-        setServerError(result?.error);
-      } else {
-        setValidToken(true);
-      }
-      setLoading(false);
+  const onLoad = async () => {
+    // if (loading) {
+    setServerError(undefined);
+    const email = searchParams.get("email") || "";
+    const token = searchParams.get("token") || "";
+    await validPasswordToken({ email, token });
+    if (!tokenLoading && tokenError) {
+      setServerError(tokenError);
+    } else {
+      setValidToken(true);
     }
+    // setLoading(false);
+    // }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  };
 
   const onSubmit = async (data: any) => {
     setServerError(undefined);
-    const result = await resetPassword({
+    await resetPassword({
       ...data,
       email: searchParams.get("email"),
       token: searchParams.get("token"),
     });
-    console.log(result);
-    if (result?.error) {
-      setServerError(result?.error);
+    if (!resetLoading && resetError) {
+      setServerError(resetError);
     } else {
       navigate("/dashboard");
     }
@@ -58,11 +66,11 @@ const ResetPassword = () => {
 
   useEffect(() => {
     onLoad();
-  }, [onLoad]);
+  }, []);
 
   return (
     <>
-      {!loading && (
+      {!tokenLoading && !tokenError && (
         <>
           <div className="flex justify-center w-full">
             <div className="flex flex-col items-center w-full">

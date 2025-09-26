@@ -8,7 +8,9 @@ export interface ResetPasswordServiceProps {
   email: string;
 }
 
-export const resetPasswordService = (data: ResetPasswordServiceProps): Promise<AuthResponse> =>
+export const resetPasswordService = (
+  data: ResetPasswordServiceProps,
+): Promise<AuthResponse> =>
   auth.post(backendRoutes.resetPasswordUrl, resetPasswordPayload(data));
 
 const resetPasswordPayload = (data: ResetPasswordServiceProps) => {

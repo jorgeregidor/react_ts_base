@@ -16,7 +16,10 @@ export default function useValidPasswordToken() {
 
   const { cleanTokens } = useStorage();
 
-  const validPasswordToken = async ({ token, email }: useValidPasswordTokenProps) => {
+  const validPasswordToken = async ({
+    token,
+    email,
+  }: useValidPasswordTokenProps) => {
     setLoading(true);
     setError(null);
     cleanTokens();

@@ -14,7 +14,9 @@ export default function useCancelAccount() {
   const context = useContext(UserContext);
 
   if (!context) {
-    throw new Error("useCancelAccount must be used within a UserContextProvider");
+    throw new Error(
+      "useCancelAccount must be used within a UserContextProvider",
+    );
   }
 
   const { setUserData } = context;

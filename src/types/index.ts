@@ -25,7 +25,6 @@ export interface ChangePasswordData {
   password_confirmation: string;
 }
 
-
 // Hook result types
 export interface HookResult<T = any> {
   response: T | null;

@@ -6,7 +6,9 @@ import Button from "../../../components/forms/Button";
 const CancelAccountForm = () => {
   const [showModal, setShowModal] = useState(false);
   const { t } = useTranslation();
-  const closeModal = () => {setShowModal(false)}
+  const closeModal = () => {
+    setShowModal(false);
+  };
 
   return (
     <>
@@ -17,7 +19,7 @@ const CancelAccountForm = () => {
       >
         {t("my_account.cancel_account.button")}
       </Button>
-     {showModal && <CancelAccountModal closeModal={closeModal} />}
+      {showModal && <CancelAccountModal closeModal={closeModal} />}
     </>
   );
 };

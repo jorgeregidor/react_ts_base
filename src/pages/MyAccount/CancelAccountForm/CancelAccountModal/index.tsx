@@ -11,9 +11,7 @@ interface CancelAccountModalProps {
   closeModal: () => void;
 }
 
-const CancelAccountModal = ({
-  closeModal,
-}: CancelAccountModalProps) => {
+const CancelAccountModal = ({ closeModal }: CancelAccountModalProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [serverError, setServerError] = useState<string | undefined>(undefined);
@@ -28,7 +26,7 @@ const CancelAccountModal = ({
 
   const closeCancelAcocountModal = () => {
     reset();
-    closeModal()
+    closeModal();
   };
 
   const onSubmit = async () => {

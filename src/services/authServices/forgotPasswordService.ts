@@ -5,7 +5,9 @@ export interface ForgotPasswordServiceProps {
   email: string;
 }
 
-export const forgotPasswordService = (user: ForgotPasswordServiceProps): Promise<any> =>
+export const forgotPasswordService = (
+  user: ForgotPasswordServiceProps,
+): Promise<any> =>
   auth.post(backendRoutes.forgotPasswordUrl, forgotPasswordPayload(user));
 
 const forgotPasswordPayload = (user: ForgotPasswordServiceProps) => {

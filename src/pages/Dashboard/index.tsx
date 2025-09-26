@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import PageTitle from "./../../components/Layout/PageTitle";
 
 function Dashboard() {
-
   return (
     <>
       <PageTitle title={"Dashboard"} />

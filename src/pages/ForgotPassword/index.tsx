@@ -69,7 +69,9 @@ const ForgotPassword = () => {
               onClick={() => setServerError(undefined)}
               disabled={loading}
             >
-              {loading ? t("common.loading") : t("forgot_password.labels.submit")}
+              {loading
+                ? t("common.loading")
+                : t("forgot_password.labels.submit")}
             </Button>
           </>
         )}

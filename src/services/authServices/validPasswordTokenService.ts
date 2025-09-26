@@ -6,8 +6,13 @@ interface ValidPasswordTokenData {
   email: string;
 }
 
-export const validPasswordTokenService = (data: ValidPasswordTokenData): Promise<any> =>
-  auth.post(backendRoutes.validPasswordTokenUrl, validPasswordTokenPayload(data));
+export const validPasswordTokenService = (
+  data: ValidPasswordTokenData,
+): Promise<any> =>
+  auth.post(
+    backendRoutes.validPasswordTokenUrl,
+    validPasswordTokenPayload(data),
+  );
 
 const validPasswordTokenPayload = (data: ValidPasswordTokenData) => {
   return {
