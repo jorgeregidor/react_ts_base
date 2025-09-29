@@ -10,8 +10,7 @@ export interface UpdateEmailServiceProps {
 
 export const updateEmailService = (
   data: UpdateEmailServiceProps,
-): Promise<User> =>
-  http.patch(userUrl(data.id), updateEmailPayload(data));
+): Promise<User> => http.patch(userUrl(data.id), updateEmailPayload(data));
 
 const updateEmailPayload = (data: UpdateEmailServiceProps) => {
   return {

@@ -7,6 +7,7 @@ import useSignup from "../../hooks/auth/useSignup";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
 import useStorage from "../../hooks/useStorage";
+import showError from "../../lib/messages/ShowError";
 
 const SignUp = () => {
   const { isLogged } = useStorage();
@@ -21,7 +22,6 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,13 +32,12 @@ const SignUp = () => {
     if (loading) return;
     if (error) {
       console.log(error);
-      setServerError(t(error));
+      showError(t(error));
     }
     if (data && !error) setLogged(true);
   }, [loading, error]);
 
   const onSubmit = async (user: any) => {
-    setServerError(undefined);
     await signup(user);
   };
   return (
@@ -52,7 +51,6 @@ const SignUp = () => {
             {errors.password_confirmation && (
               <p>{errors.password_confirmation?.message?.toString()} </p>
             )}
-            {serverError && <p>{t(serverError)}</p>}
           </div>
         </div>
       </div>
@@ -105,11 +103,7 @@ const SignUp = () => {
         >
           {t("login.labels.forgot_password")}
         </Link>
-        <Button
-          type="submit"
-          variant="primary"
-          onClick={() => setServerError(undefined)}
-        >
+        <Button type="submit" variant="primary">
           {t("login.labels.sign_up")}
         </Button>
         <Button

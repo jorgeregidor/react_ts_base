@@ -9,10 +9,7 @@ interface ValidPasswordTokenData {
 export const validPasswordTokenService = (
   data: ValidPasswordTokenData,
 ): Promise<any> =>
-  auth.post(
-    validPasswordTokenUrl,
-    validPasswordTokenPayload(data),
-  );
+  auth.post(validPasswordTokenUrl, validPasswordTokenPayload(data));
 
 const validPasswordTokenPayload = (data: ValidPasswordTokenData) => {
   return {

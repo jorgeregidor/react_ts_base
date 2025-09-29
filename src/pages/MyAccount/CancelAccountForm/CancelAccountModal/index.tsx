@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Input from "../../../../components/forms/Input";
 import Button from "../../../../components/forms/Button";
 import Modal from "../../../../components/Modal";
+import showError from "../../../../lib/messages/ShowError";
 
 interface CancelAccountModalProps {
   closeModal: () => void;
@@ -14,7 +15,6 @@ interface CancelAccountModalProps {
 const CancelAccountModal = ({ closeModal }: CancelAccountModalProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const { error, cancelAccount } = useCancelAccount();
 
   const {
@@ -30,10 +30,9 @@ const CancelAccountModal = ({ closeModal }: CancelAccountModalProps) => {
   };
 
   const onSubmit = async () => {
-    setServerError(undefined);
     await cancelAccount();
     if (error) {
-      setServerError(t(error));
+      showError(t(error));
     } else {
       navigate("/sign_up");
     }
@@ -80,7 +79,6 @@ const CancelAccountModal = ({ closeModal }: CancelAccountModalProps) => {
             {errors.delete_key && (
               <p>{errors.delete_key?.message?.toString()} </p>
             )}
-            {serverError && <p>{t(serverError)}</p>}
           </div>
         </div>
         <div className="flex w-full justify-end p-4 pt-0">
@@ -92,12 +90,7 @@ const CancelAccountModal = ({ closeModal }: CancelAccountModalProps) => {
           >
             {t("my_account.cancel_account.modal.labels.back")}
           </Button>
-          <Button
-            type="submit"
-            variant="danger"
-            onClick={() => setServerError(undefined)}
-            className="w-full ml-1"
-          >
+          <Button type="submit" variant="danger" className="w-full ml-1">
             {t("my_account.cancel_account.modal.labels.submit")}
           </Button>
         </div>

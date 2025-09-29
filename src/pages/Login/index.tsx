@@ -7,6 +7,7 @@ import useLogin from "../../hooks/auth/useLogin";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
 import useStorage from "../../hooks/useStorage";
+import showError from "../../lib/messages/ShowError";
 
 const Login = () => {
   const { isLogged } = useStorage();
@@ -20,7 +21,6 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,14 +30,12 @@ const Login = () => {
   useEffect(() => {
     if (loading) return;
     if (error) {
-      console.log(error);
-      setServerError(t(error));
+      showError(t(error));
     }
     if (data && !error) setLogged(true);
   }, [loading, error]);
 
   const onSubmit = async (data: any) => {
-    setServerError(undefined);
     await login(data);
   };
 
@@ -49,7 +47,7 @@ const Login = () => {
           <div className="h-[50px] pt-4 text-sm text-red-600">
             {errors.email && <p>{String(errors.email?.message)} </p>}
             {errors.password && <p>{String(errors.password?.message)} </p>}
-            {serverError && <p>{serverError}</p>}
+            {/* {serverError && <p>{serverError}</p>} */}
           </div>
         </div>
       </div>

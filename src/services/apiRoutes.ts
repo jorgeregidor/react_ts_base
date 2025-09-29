@@ -1,4 +1,5 @@
-export const baseUrl = import.meta.env.VITE_BASE_API_URL || "http://localhost:3000";
+export const baseUrl =
+  import.meta.env.VITE_BASE_API_URL || "http://localhost:3000";
 export const loginUrl = "/auth/token";
 export const logoutUrl = "/auth/logout";
 export const signUpUrl = "/auth/signup";

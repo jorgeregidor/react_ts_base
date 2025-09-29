@@ -10,8 +10,7 @@ export interface SignUpServiceProps {
 
 export const signUpService = (
   user: SignUpServiceProps,
-): Promise<AuthResponse> =>
-  auth.post(signUpUrl, signUpPayload(user));
+): Promise<AuthResponse> => auth.post(signUpUrl, signUpPayload(user));
 
 const signUpPayload = (user: SignUpServiceProps) => {
   return {

@@ -11,10 +11,7 @@ export interface UpdatePasswordServiceProps {
 export const updatePasswordService = (
   data: UpdatePasswordServiceProps,
 ): Promise<any> =>
-  http.patch(
-    userPasswordUrl(data.id),
-    updatePasswordPayload(data),
-  );
+  http.patch(userPasswordUrl(data.id), updatePasswordPayload(data));
 
 const updatePasswordPayload = (data: UpdatePasswordServiceProps) => {
   return {

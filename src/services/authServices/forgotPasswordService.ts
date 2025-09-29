@@ -7,8 +7,7 @@ export interface ForgotPasswordServiceProps {
 
 export const forgotPasswordService = (
   user: ForgotPasswordServiceProps,
-): Promise<any> =>
-  auth.post(forgotPasswordUrl, forgotPasswordPayload(user));
+): Promise<any> => auth.post(forgotPasswordUrl, forgotPasswordPayload(user));
 
 const forgotPasswordPayload = (user: ForgotPasswordServiceProps) => {
   return {

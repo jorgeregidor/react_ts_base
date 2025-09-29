@@ -7,6 +7,7 @@ import useForgotPassword from "../../hooks/auth/useForgotPassword";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
+import showError from "../../lib/messages/ShowError";
 
 const ForgotPassword = () => {
   const { isLogged } = useStorage();
@@ -20,7 +21,6 @@ const ForgotPassword = () => {
     formState: { errors },
   } = useForm();
 
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -28,10 +28,9 @@ const ForgotPassword = () => {
   }, [isLogged, navigate]);
 
   const onSubmit = async (user: any) => {
-    setServerError(undefined);
     await forgotPassword(user);
     if (error) {
-      setServerError(t(error));
+      showError(t(error));
     } else {
       setRequested(true);
     }
@@ -43,7 +42,6 @@ const ForgotPassword = () => {
           <AuthTitle title={t("forgot_password.title")} />
           <div className="h-[50px] pt-4 text-sm text-red-600">
             {errors.email && <p>{errors.email?.message?.toString()} </p>}
-            {serverError && <p>{t(serverError)}</p>}
           </div>
         </div>
       </div>
@@ -63,12 +61,7 @@ const ForgotPassword = () => {
                 required: t("forgot_password.errors.email.blank"),
               }}
             />
-            <Button
-              type="submit"
-              variant="primary"
-              onClick={() => setServerError(undefined)}
-              disabled={loading}
-            >
+            <Button type="submit" variant="primary" disabled={loading}>
               {loading
                 ? t("common.loading")
                 : t("forgot_password.labels.submit")}

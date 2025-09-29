@@ -7,6 +7,7 @@ import useResetPassword from "../../hooks/auth/useResetPassword";
 import AuthTitle from "./../../components/LayoutAuth/AuthTitle";
 import Input from "../../components/forms/Input";
 import Button from "../../components/forms/Button";
+import showError from "../../lib/messages/ShowError";
 
 const ResetPassword = () => {
   const {
@@ -29,31 +30,28 @@ const ResetPassword = () => {
   } = useForm();
 
   const [validToken, setValidToken] = useState(false);
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const onLoad = async () => {
-    setServerError(undefined);
     const email = searchParams.get("email") || "";
     const token = searchParams.get("token") || "";
     await validPasswordToken({ email, token });
     if (!tokenLoading && tokenError) {
-      setServerError(tokenError);
+      showError(t(tokenError));
     } else {
       setValidToken(true);
     }
   };
 
   const onSubmit = async (data: any) => {
-    setServerError(undefined);
     await resetPassword({
       ...data,
       email: searchParams.get("email"),
       token: searchParams.get("token"),
     });
     if (!resetLoading && resetError) {
-      setServerError(resetError);
+      showError(t(resetError));
     } else {
       navigate("/dashboard");
     }
@@ -77,7 +75,6 @@ const ResetPassword = () => {
                 {errors.password_confirmation && (
                   <p>{errors.password_confirmation?.message?.toString()} </p>
                 )}
-                {serverError && <p>{t(serverError)}</p>}
               </div>
             </div>
           </div>
@@ -119,11 +116,7 @@ const ResetPassword = () => {
                   },
                 }}
               />
-              <Button
-                type="submit"
-                variant="primary"
-                onClick={() => setServerError(undefined)}
-              >
+              <Button type="submit" variant="primary">
                 {t("reset_password.labels.submit")}
               </Button>
             </form>

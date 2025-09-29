@@ -5,9 +5,9 @@ import Input from "../../../components/forms/Input";
 import Button from "../../../components/forms/Button";
 import UserContext from "../../../contexts/UserContext";
 import useUpdateEmail from "../../../hooks/user/useUpdateEmail";
+import showError from "../../../lib/messages/ShowError";
 
 const ChangeEmailForm = () => {
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const { error, loading, updateEmail } = useUpdateEmail();
@@ -35,11 +35,10 @@ const ChangeEmailForm = () => {
   }, [email]);
 
   const onSubmit = async (data: any) => {
-    setServerError(undefined);
     data = { ...data, id: userData?.id };
     await updateEmail(data);
     if (error) {
-      setServerError(t(error));
+      showError(t(error));
     } else {
       setSuccess(t("my_account.change_email.requested"));
     }
@@ -64,7 +63,6 @@ const ChangeEmailForm = () => {
         <div className="my-2">
           <div className="text-sm text-red-600 ">
             {errors.email && <p>{errors.email?.message?.toString()} </p>}
-            {serverError && <p>{t(serverError)}</p>}
           </div>
           <div className="text-sm text-blue-600">
             {success && <p>{success} </p>}

@@ -5,9 +5,9 @@ import UserContext from "../../../contexts/UserContext";
 import Input from "../../../components/forms/Input";
 import Button from "../../../components/forms/Button";
 import useUpdatePassword from "../../../hooks/user/useUpdatePassword";
+import showError from "../../../lib/messages/ShowError";
 
 const ChangePasswordForm = () => {
-  const [serverError, setServerError] = useState<string | undefined>(undefined);
   const [disabled, setDisabled] = useState<boolean>(true);
   const [success, setSuccess] = useState<string | undefined>(undefined);
   const context = useContext(UserContext);
@@ -38,11 +38,10 @@ const ChangePasswordForm = () => {
   }, [oldPassword, password, passwordConfirmation]);
 
   const onSubmit = async (data: any) => {
-    setServerError(undefined);
     data = { ...data, id: userData?.id };
     await updatePassword(data);
     if (error) {
-      setServerError(t(error));
+      showError(t(error));
     } else {
       setSuccess(t("my_account.change_password.success"));
       reset();
@@ -112,7 +111,6 @@ const ChangePasswordForm = () => {
             {errors.password_confirmation && (
               <p>{errors.password_confirmation?.message?.toString()} </p>
             )}
-            {serverError && <p>{t(serverError)}</p>}
           </div>
           <div className="text-sm text-blue-600">
             {success && <p>{success} </p>}
@@ -122,7 +120,6 @@ const ChangePasswordForm = () => {
           type="submit"
           variant="primary"
           disabled={disabled}
-          onClick={() => setServerError(undefined)}
           className={disabled ? "bg-blue-200" : ""}
         >
           {t("my_account.change_password.labels.submit")}

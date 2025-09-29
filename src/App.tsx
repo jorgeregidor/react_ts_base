@@ -12,10 +12,12 @@ import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
 import MyAccount from "./pages/MyAccount";
 import LayoutAuth from "./components/LayoutAuth";
+import ToastContainerCustom from "./components/ToastContainerCustom";
 
 function App() {
   return (
     <UserContextProvider>
+      <ToastContainerCustom />
       <>
         <Routes>
           <Route path="/" element={<Landing />} />
