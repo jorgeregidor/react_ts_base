@@ -6,10 +6,10 @@ import Input from "../../../components/forms/Input";
 import Button from "../../../components/forms/Button";
 import useUpdatePassword from "../../../hooks/user/useUpdatePassword";
 import showError from "../../../lib/messages/ShowError";
+import showSuccess from "../../../lib/messages/ShowSuccess";
 
 const ChangePasswordForm = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [success, setSuccess] = useState<string | undefined>(undefined);
   const context = useContext(UserContext);
   if (!context) {
     throw new Error("useAuth must be used within a UserContextProvider");
@@ -43,7 +43,7 @@ const ChangePasswordForm = () => {
     if (error) {
       showError(t(error));
     } else {
-      setSuccess(t("my_account.change_password.success"));
+      showSuccess(t("my_account.change_password.success"));
       reset();
     }
   };
@@ -111,9 +111,6 @@ const ChangePasswordForm = () => {
             {errors.password_confirmation && (
               <p>{errors.password_confirmation?.message?.toString()} </p>
             )}
-          </div>
-          <div className="text-sm text-blue-600">
-            {success && <p>{success} </p>}
           </div>
         </div>
         <Button

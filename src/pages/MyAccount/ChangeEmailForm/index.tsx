@@ -6,10 +6,10 @@ import Button from "../../../components/forms/Button";
 import UserContext from "../../../contexts/UserContext";
 import useUpdateEmail from "../../../hooks/user/useUpdateEmail";
 import showError from "../../../lib/messages/ShowError";
+import showSuccess from "../../../lib/messages/ShowSuccess";
 
 const ChangeEmailForm = () => {
   const [disabled, setDisabled] = useState<boolean>(true);
-  const [success, setSuccess] = useState<string | undefined>(undefined);
   const { error, loading, updateEmail } = useUpdateEmail();
 
   const context = useContext(UserContext);
@@ -40,7 +40,7 @@ const ChangeEmailForm = () => {
     if (error) {
       showError(t(error));
     } else {
-      setSuccess(t("my_account.change_email.requested"));
+      showSuccess(t("my_account.change_email.requested"));
     }
   };
 
@@ -64,15 +64,11 @@ const ChangeEmailForm = () => {
           <div className="text-sm text-red-600 ">
             {errors.email && <p>{errors.email?.message?.toString()} </p>}
           </div>
-          <div className="text-sm text-blue-600">
-            {success && <p>{success} </p>}
-          </div>
         </div>
         <Button
           type="submit"
           variant="primary"
           disabled={disabled || loading}
-          onClick={() => setServerError(undefined)}
           className={disabled ? "bg-blue-200" : ""}
         >
           {t("my_account.change_email.labels.submit")}
